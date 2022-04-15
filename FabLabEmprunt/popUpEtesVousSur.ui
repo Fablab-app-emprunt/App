@@ -41,7 +41,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Êtes vous sûr ?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="rendreOutils_4">
+  <widget class="QPushButton" name="boutonoui">
    <property name="geometry">
     <rect>
      <x>66</x>
@@ -270,7 +270,7 @@ border-bort</string>
     <string>Oui</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="rendreOutils_5">
+  <widget class="QPushButton" name="boutonnon">
    <property name="geometry">
     <rect>
      <x>303</x>
