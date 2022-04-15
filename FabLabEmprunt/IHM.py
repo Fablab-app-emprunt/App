@@ -1,6 +1,3 @@
-from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QRadioButton
-from PyQt5.uic import loadUi
-
 from PyQt5.QtWidgets import QApplication, QLabel, QWidget
 from PyQt5.uic import loadUi
 
