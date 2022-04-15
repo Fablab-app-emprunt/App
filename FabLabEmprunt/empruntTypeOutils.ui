@@ -929,7 +929,7 @@ border-bort</string>
     <string>Valider</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="rendreOutils_5">
+  <widget class="QPushButton" name="boutonaccueil">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -1159,7 +1159,7 @@ border-bort
     <string/>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="signeHome.qrc">
      <normaloff>:/Home/Capture d’écran 2022-04-14 153417.png</normaloff>:/Home/Capture d’écran 2022-04-14 153417.png</iconset>
    </property>
    <property name="iconSize">
