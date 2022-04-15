@@ -2,7 +2,7 @@ from PyQt5 import QtGui,QtCore
 from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QMessageBox
 from PyQt5.uic import loadUi
 
-from FabLabEmprunt.IHM import PageAccueil
+from FabLabEmprunt.pageAccueil import PageAccueil
 
 class Empruntajout(QWidget):
     def __init__(self):
