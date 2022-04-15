@@ -12,18 +12,19 @@ class PageAccueil(QWidget):
 
     def rendreOutils(self):
         print("rendre outils")
-        self.close()
         self.type_outils.show()
+        self.close()
+
 
     def emprunterOutils(self):
         print("emprunter outils")
+        self.type_outils.show()
         self.close()
-        type_outils = EmpruntTypeOutils()
-        type_outils.show()
 
 
 
-if __name__ == "main":
+
+if __name__ == "__main__":
     app = QApplication([])
     monIHM = PageAccueil()
     monIHM.show()

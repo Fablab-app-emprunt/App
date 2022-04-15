@@ -21,5 +21,3 @@ if __name__== "__main__":
     empruntTypeOutils = EmpruntTypeOutils()
     empruntTypeOutils.show()
     app.exec_()
-
-.
