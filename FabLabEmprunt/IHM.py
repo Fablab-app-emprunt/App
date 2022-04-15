@@ -1,25 +1,30 @@
-from PyQt5.QtWidgets import QApplication, QLabel, QWidget
+from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QMessageBox
 from PyQt5.uic import loadUi
+from FabLabEmprunt.empruntTypeOutils import EmpruntTypeOutils
 
-class pageAccueil(QWidget):
+class PageAccueil(QWidget):
     def __init__(self):
-        super(pageAccueil,self).__init__()
+        super(PageAccueil,self).__init__()
         loadUi('pageAccueil.ui',self)
-        self.rendreOutils.clicked.connect(self.rendreOutils)
+        self.rendreoutils.clicked.connect(self.rendreOutils)
+        self.emprunteroutils.clicked.connect(self.emprunterOutils)
+        self.type_outils = EmpruntTypeOutils()
+
     def rendreOutils(self):
-        return "rendre outils"
+        print("rendre outils")
+        self.close()
+        self.type_outils.show()
+
+    def emprunterOutils(self):
+        print("emprunter outils")
+        self.close()
+        type_outils = EmpruntTypeOutils()
+        type_outils.show()
 
 
-#     def emprunterOutils(self):
-#         return "emprunter outils"
-#
-#
-# class empruntTypeOutils(QWidget):
-#     def __init__(self):
-#         super(empruntTypeOutils,self).__init__()
-#         loadUi('pageAccueil.ui',self)
 
-app = QApplication([])
-monIHM = pageAccueil()
-monIHM.show()
-app.exec_()
+if __name__ == "main":
+    app = QApplication([])
+    monIHM = PageAccueil()
+    monIHM.show()
+    app.exec_()
