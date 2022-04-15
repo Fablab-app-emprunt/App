@@ -4,9 +4,9 @@ from PyQt5.uic import loadUi
 
 from FabLabEmprunt.pageAccueil import PageAccueil
 
-class Empruntajout(QWidget):
+class EmpruntAjout(QWidget):
     def __init__(self):
-        super(Empruntajout, self).__init__()
+        super(EmpruntAjout, self).__init__()
         loadUi('empruntAjout.ui',self)
         self.boutonaccueil.clicked.connect(self.accueil)
         icon = QtGui.QIcon()
