@@ -23,3 +23,7 @@ app = QApplication([])
 emprunt = empruntajout()
 emprunt.show()
 app.exec_()
+
+
+
+.

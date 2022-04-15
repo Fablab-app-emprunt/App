@@ -34,3 +34,6 @@ if __name__== "__main__":
     popUpEtesVousSur = PopUpEtesVousSurWidget()
     popUpEtesVousSur.show()
     app.exec_()
+
+
+.
