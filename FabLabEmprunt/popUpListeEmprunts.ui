@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QPushButton" name="rendreOutils_4">
+  <widget class="QPushButton" name="boutonconfirmer">
    <property name="geometry">
     <rect>
      <x>164</x>
@@ -252,7 +252,7 @@ border-bort</string>
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="rendreOutils_5">
+  <widget class="QPushButton" name="boutoncroix">
    <property name="geometry">
     <rect>
      <x>440</x>

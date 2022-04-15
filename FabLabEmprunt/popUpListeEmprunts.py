@@ -1,25 +1,25 @@
 from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QRadioButton, QPushButton
 from PyQt5.uic import loadUi
 
-from FabLabEmprunt.empruntTypeOutils import EmpruntTypeOutils
+from FabLabEmprunt.pageAccueil import PageAccueil
 
 
-class PopUpEtesVousSurWidget(QWidget):
+class PopUpListeEmpruntsWidget(QWidget):
     def __init__(self):
-        super(PopUpEtesVousSurWidget, self).__init__()
-        loadUi('popUpEtesVousSur.ui', self)
-        self.boutonoui.clicked.connect(self.reponseOui)
-        self.boutonnon.clicked.connect(self.reponseNon)
-        self.empruntTypeOutils = EmpruntTypeOutils()
+        super(PopUpListeEmpruntsWidget, self).__init__()
+        loadUi('popUpListeEmprunts.ui', self)
+        self.boutoncroix.clicked.connect(self.reponseCroix)
+        self.boutonconfirmer.clicked.connect(self.reponseConfirmer)
+        self.pageAccueil = PageAccueil()
 
 
-    def reponseOui(self):
+    def reponseConfirmer(self):
 
-        self.empruntTypeOutils.show()
+        self.pageAccueil.show()
         self.close()
 
-    def reponseNon(self):
-        pass
+    def reponseCroix(self):
+        self.close()
 
 
 
@@ -30,6 +30,6 @@ class PopUpEtesVousSurWidget(QWidget):
 
 if __name__== "__main__":
     app = QApplication([])
-    popUpEtesVousSur = PopUpEtesVousSurWidget()
-    popUpEtesVousSur.show()
+    popUpListeEmprunts = PopUpListeEmpruntsWidget()
+    popUpListeEmprunts.show()
     app.exec_()
