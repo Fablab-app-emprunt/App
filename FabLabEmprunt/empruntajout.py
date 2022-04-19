@@ -2,7 +2,8 @@ from PyQt5 import QtGui,QtCore
 from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QMessageBox
 from PyQt5.uic import loadUi
 
-from FabLabEmprunt.pageAccueil import PageAccueil
+# from FabLabEmprunt.imported import *
+from FabLabEmprunt.pageAccueil import *
 
 class EmpruntAjout(QWidget):
     def __init__(self):
@@ -14,7 +15,7 @@ class EmpruntAjout(QWidget):
         self.boutonaccueil.setIcon(icon)
         self.today.clicked.connect(self.date)
         self.dateemprunt.clicked.connect(self.date)
-        self.monIHM = PageAccueil()
+
 
     def accueil(self):
         self.monIHM.show()
@@ -26,6 +27,6 @@ class EmpruntAjout(QWidget):
 
 if __name__ == "__main__":
     app = QApplication([])
-    emprunt = Empruntajout()
+    emprunt = EmpruntAjout()
     emprunt.show()
     app.exec_()

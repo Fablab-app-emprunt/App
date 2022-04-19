@@ -1,6 +1,9 @@
 from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QMessageBox
 from PyQt5.uic import loadUi
+
+# from FabLabEmprunt.imported import *
 from FabLabEmprunt.empruntTypeOutils import *
+
 
 class PageAccueil(QWidget):
     def __init__(self):
@@ -12,12 +15,12 @@ class PageAccueil(QWidget):
 
     def rendreOutils(self):
         self.type_outils.show()
-        self.close()
+        self.hide()
 
 
     def emprunterOutils(self):
         self.type_outils.show()
-        self.close()
+        self.hide()
 
 
 

@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QRadioButton, QPushButton
-from PyQt5.uic import loadUi
+# from PyQt5.uic import loadUi
 
-from FabLabEmprunt.pageAccueil import PageAccueil
+# from FabLabEmprunt.imported import *
 
 
 class PopUpListeEmpruntsWidget(QWidget):

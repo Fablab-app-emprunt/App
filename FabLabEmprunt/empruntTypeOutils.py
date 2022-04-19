@@ -1,7 +1,9 @@
 from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QRadioButton, QPushButton
 from PyQt5.uic import loadUi
 from PyQt5 import QtGui,QtCore
-# from FabLabEmprunt.empruntajout import EmpruntAjout
+# from FabLabEmprunt.imported import *
+from FabLabEmprunt.empruntajout import *
+
 class EmpruntTypeOutils(QWidget):
     def __init__(self):
         super(EmpruntTypeOutils, self).__init__()
