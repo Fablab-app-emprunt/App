@@ -1,35 +1,43 @@
-from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QMessageBox
-from PyQt5.QtWidgets import *
+import sys
+from PyQt5 import QtGui
+from PyQt5 import QtWidgets
 from PyQt5.uic import loadUi
-# importation de la classe pyqtSignal afin de permettre à la fenêtre d'envoyer des données vers une autre fenêtre
-from PyQt5.QtCore import pyqtSignal
-from FabLabEmprunt.empruntTypeOutils import *
+from PyQt5.QtWidgets import QDialog, QApplication, QLabel, QWidget, QMessageBox
+
+# from FabLabEmprunt.empruntTypeOutils import EmpruntTypeOutils
 
 class PageAccueil(QWidget):
-    def __init__(self, second):
+    def __init__(self):
         super(PageAccueil,self).__init__()
-        self.second = second
         loadUi('pageAccueil.ui',self)
-        self.rendreoutils.clicked.connect(self.rendreOutils)
-        self.emprunteroutils.clicked.connect(self.emprunterOutils)
+        self.rendreoutils.clicked.connect(self.goToRendreOutils)
+        self.emprunteroutils.clicked.connect(self.goToEmprunterOutils)
 
+    def goToRendreOutils(self):
+        # from Manager import widget,page_choix_type_outils
+        # widget.addWidget(rendreoutils)
+        # print(widget.currentIndex())
+        # widget.setCurrentIndex(widget.currentIndex()+1)
+        # print(widget.currentIndex())
+        widget.setCurrentIndex(1)
 
-    def rendreOutils(self):
-        self.close() # ferme la première fenêtre
-        self.second.show() # Affiche la deuxième fenêtre
-
-
-
-    def emprunterOutils(self):
-        self.close() # ferme la première fenêtre
-        self.second.show() # Affiche la deuxième fenêtre
-
-
-
+    def goToEmprunterOutils(self):
+        # rendreoutils = EmpruntTypeOutils()
+        # widget.addWidget(rendreoutils)
+        # widget.setCurrentIndex(widget.currentIndex()+1)
+        widget.setCurrentIndex(1)
 
 
 if __name__ == "__main__":
-    app = QApplication([])
-    monIHM = PageAccueil()
-    monIHM.show()
-    app.exec_()
+    app = QApplication(sys.argv)
+    widget = QtWidgets.QStackedWidget()
+    page_accueil = PageAccueil()
+    widget.addWidget(page_accueil)
+    widget.setFixedHeight(700)
+    widget.setFixedWidth(1000)
+    widget.show()
+
+    try:
+        sys.exit(app.exec_())
+    except :
+        print("Exiting")

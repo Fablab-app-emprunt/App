@@ -1,15 +1,13 @@
+import sys
+from PyQt5 import QtWidgets
 from PyQt5 import QtGui
-from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QMessageBox
-from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
+from PyQt5.QtWidgets import QDialog, QApplication, QLabel, QWidget, QMessageBox
+
 from FabLabEmprunt.empruntajout import *
 from FabLabEmprunt.pageAccueil import *
 
-# importation de la classe pyqtSignal afin de permettre à la fenêtre d'envoyer des données vers une autre fenêtre
-from PyQt5.QtCore import pyqtSignal
-
 class EmpruntTypeOutils(QWidget):
-    signal = pyqtSignal(str)
     def __init__(self):
         super(EmpruntTypeOutils, self).__init__()
         loadUi('empruntTypeOutils.ui', self)
@@ -20,42 +18,53 @@ class EmpruntTypeOutils(QWidget):
         self.bouton_bois.clicked.connect(self.bois)
         self.bouton_usinage.clicked.connect(self.usinage)
         self.boutonaccueil.clicked.connect(self.accueil)
-        # self.fenetre_choix_outils = EmpruntAjout()
-        # self.page_accueil = PageAccueil()
+
 
     def accueil(self):
-        print(self.boutonaccueil.text())
-        self.signal.emit(self.boutonaccueil.text())
-        self.close()
+        # page_accueil = PageAccueil()
+        # widget.addWidget(page_accueil)
+        # print(widget.currentIndex())
+        # widget.setCurrentIndex(widget.currentIndex()+1)
+        # print(widget.currentIndex())
+
+        widget.setCurrentIndex(0)
 
 
     def bois(self):
-        # self.fenetre_choix_outils.show()
-        # self.hide()
-        pass
+        # outils_bois = EmpruntAjout()
+        # widget.addWidget(outils_bois)
+        # widget.setCurrentIndex(widget.currentIndex()+1)
+
+        widget.setCurrentIndex(2)
 
     def elec(self):
-        # self.fenetre_choix_outils.show()
-        # self.hide()
-        pass
+        # outils_elec = EmpruntAjout()
+        # widget.addWidget(outils_elec)
+        # widget.setCurrentIndex(widget.currentIndex()+1)
+
+        widget.setCurrentIndex(2)
 
     def usinage(self):
-        # self.fenetre_choix_outils.show()
-        # self.hide()
-        pass
+        # outils_usinage = EmpruntAjout()
+        # widget.addWidget(outils_usinage)
+        # widget.setCurrentIndex(widget.currentIndex()+1)
 
-
-
-
-
-
-
-
+        widget.setCurrentIndex(2)
 
 
 if __name__== "__main__":
-    app = QApplication([])
-    empruntTypeOutils = EmpruntTypeOutils()
-    empruntTypeOutils.show()
-    app.exec_()
+    app = QApplication(sys.argv)
+    widget = QtWidgets.QStackedWidget()
+
+    emprunt_type_outils = EmpruntTypeOutils()
+
+    widget.addWidget(emprunt_type_outils)
+    widget.setFixedHeight(700)
+    widget.setFixedWidth(1000)
+    widget.show()
+
+    try:
+        sys.exit(app.exec_())
+    except :
+        print("Exiting")
 
