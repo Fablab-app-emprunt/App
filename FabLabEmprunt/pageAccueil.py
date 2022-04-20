@@ -1,26 +1,29 @@
 from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QMessageBox
+from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
-
-# from FabLabEmprunt.imported import *
+# importation de la classe pyqtSignal afin de permettre à la fenêtre d'envoyer des données vers une autre fenêtre
+from PyQt5.QtCore import pyqtSignal
 from FabLabEmprunt.empruntTypeOutils import *
 
-
 class PageAccueil(QWidget):
-    def __init__(self):
+    def __init__(self, second):
         super(PageAccueil,self).__init__()
+        self.second = second
         loadUi('pageAccueil.ui',self)
         self.rendreoutils.clicked.connect(self.rendreOutils)
         self.emprunteroutils.clicked.connect(self.emprunterOutils)
-        self.type_outils = EmpruntTypeOutils()
+
 
     def rendreOutils(self):
-        self.type_outils.show()
-        self.hide()
+        self.close() # ferme la première fenêtre
+        self.second.show() # Affiche la deuxième fenêtre
+
 
 
     def emprunterOutils(self):
-        self.type_outils.show()
-        self.hide()
+        self.close() # ferme la première fenêtre
+        self.second.show() # Affiche la deuxième fenêtre
+
 
 
 
