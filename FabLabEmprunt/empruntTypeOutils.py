@@ -1,14 +1,14 @@
 import sys
 from PyQt5 import QtWidgets
 from PyQt5 import QtGui
-from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QDialog, QApplication, QLabel, QWidget, QMessageBox
 
-from FabLabEmprunt.empruntajout import *
-from FabLabEmprunt.pageAccueil import *
+# from FabLabEmprunt.empruntajout import EmpruntAjout
+# from FabLabEmprunt.pageAccueil import PageAccueil
 
-class EmpruntTypeOutils(QWidget):
+class EmpruntTypeOutils(QDialog):
     def __init__(self):
+        from PyQt5.uic import loadUi
         super(EmpruntTypeOutils, self).__init__()
         loadUi('empruntTypeOutils.ui', self)
         icon = QtGui.QIcon()

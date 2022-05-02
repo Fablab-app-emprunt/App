@@ -1,8 +1,10 @@
 import sys
 from PyQt5 import QtGui
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtSql
 from PyQt5.uic import loadUi
-from PyQt5.QtWidgets import QDialog, QApplication, QLabel, QWidget, QMessageBox
+from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QWidget, QMessageBox
+from PyQt5.QtSql import QSql, QSqlQuery, QSqlDatabase
+
 
 class PageAccueil(QWidget):
     def __init__(self):
@@ -10,6 +12,7 @@ class PageAccueil(QWidget):
         loadUi('pageAccueil.ui',self)
         self.rendreoutils.clicked.connect(self.goToRendreOutils)
         self.emprunteroutils.clicked.connect(self.goToEmprunterOutils)
+
 
     def goToRendreOutils(self):
         widget.setCurrentIndex(1)
@@ -44,11 +47,8 @@ class EmpruntTypeOutils(QWidget):
     def usinage(self):
         widget.setCurrentIndex(2)
 
-# from pageAccueil import PageAccueil
-# from empruntTypeOutils import EmpruntTypeOutils
-# from empruntajout import EmpruntAjout
 
-class EmpruntAjout(QWidget):
+class EmpruntAjout(QWidget, QSqlDatabase):
     def __init__(self):
         super(EmpruntAjout, self).__init__()
         loadUi('empruntAjout.ui',self)
@@ -59,6 +59,46 @@ class EmpruntAjout(QWidget):
         self.today.clicked.connect(self.date)
         self.dateemprunt.clicked.connect(self.date)
 
+        #---------BDD----------------
+
+    #-----------Déclaration de la connexion---------
+
+        # db = QSqlDatabase.addDatabase('QMYSQL')
+        # db.setHostName('localhost')
+        # db.setPort(3306)
+        # db.setDatabaseName("mabase")
+
+    #-----------Ouverture d'une connexion---------
+
+        # if db.open("login", "motdepase"):
+        #     pass
+
+    #-----------fermeture d'une connexion---------
+
+        # db.close()
+
+    #----------Requêtes de consultation------------
+
+        # query = QSqlQuery("select login from Utilisateur")
+        # while query.next():
+        #     print(query.value("login"))
+
+    #----------Requêtes de modification------------
+
+        # query = QSqlQuery("insert into Utilisateur (login) values ('david')")
+
+        #                OU
+
+        # query = QSqlQuery()
+        # query.exec_("insert into Utilisateur (login) values ('david')")
+
+    #----------Requêtes préparées------------ (utile lorsqu'on utilise des variables)
+
+        # query = QSqlQuery()
+        # query.prepare("insert into Utilisateur (login) values (:nom)")
+        # query.bindValue(":nom", "david")
+        # query.exec_()
+
     def accueil(self):
        widget.setCurrentIndex(0)
 
@@ -66,15 +106,20 @@ class EmpruntAjout(QWidget):
         value = self.today.selectedDate()
         return value
 
+    #-----------Gestion des erreurs---------------
+
+        # db.open("login", "motdepasse")
+        # if db.isOpenError():
+        #     error = db.lastError()
 
 if __name__ == "__main__":
 
     app = QApplication(sys.argv)
     widget = QtWidgets.QStackedWidget()
 
-    # from FabLabEmprunt.pageAccueil import PageAccueil
-    # from FabLabEmprunt.empruntTypeOutils import EmpruntTypeOutils
-    # from FabLabEmprunt.empruntajout import EmpruntAjout
+    # from FabLabEmprunt.pageAccueil import *
+    # from FabLabEmprunt.empruntTypeOutils import *
+    # from FabLabEmprunt.empruntajout import *
 
     page_accueil = PageAccueil()
     page_choix_type_outils = EmpruntTypeOutils()

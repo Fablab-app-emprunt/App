@@ -2,12 +2,13 @@ import sys
 from PyQt5 import QtWidgets
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import *
-from PyQt5.uic import loadUi
 
-from FabLabEmprunt.pageAccueil import *
+# from FabLabEmprunt.pageAccueil import PageAccueil
 
-class EmpruntAjout(QWidget):
+class EmpruntAjout(QDialog):
     def __init__(self):
+        from PyQt5.uic import loadUi
+        from PyQt5 import QtGui
         super(EmpruntAjout, self).__init__()
         loadUi('empruntAjout.ui',self)
         self.boutonaccueil.clicked.connect(self.accueil)
