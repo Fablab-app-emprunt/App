@@ -4,6 +4,7 @@ from PyQt5 import QtWidgets, QtSql
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QWidget, QMessageBox
 from PyQt5.QtSql import QSql, QSqlQuery, QSqlDatabase
+import mysql.connector
 
 
 class PageAccueil(QWidget):
@@ -62,27 +63,21 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         #---------BDD----------------
 
     #-----------Déclaration de la connexion---------
-        from PyQt5.QtSql import QSqlDatabase
-        db = QSqlDatabase.addDatabase('QSQLITE')
-        db.setHostName('145.14.151.101')
-        db.setPort(3306)
-        db.setDatabaseName("u556968436_fablab")
-        print(db.open("u556968436_LaTeamDeLoick", "LoickRaison2022"))
-    #-----------Ouverture d'une connexion---------
+        connection = mysql.connector.connect(user='u556968436_LaTeamDeLoick', password='LoickRaison2022',
+                                             host='145.14.151.101',
+                                             database='u556968436_fablab')
+        sql_select_Query = "select * from Personnes"
+        cursor = connection.cursor()
+        cursor.execute(sql_select_Query)
+        # get all records
+        records = cursor.fetchall()
+        print("Total number of rows in table: ", cursor.rowcount)
 
-        if db.open("u556968436_LaTeamDeLoick", "LoickRaison2022"):
-            print("database connected")
+        print("\nPrinting each row")
+        for row in records:
+            print("Id = ", row[1], )
 
-    #-----------fermeture d'une connexion---------
-
-        db.close()
-
-    #----------Requêtes de consultation------------
-
-        # query = QSqlQuery("select login from Utilisateur")
-        # while query.next():
-        #     print(query.value("login"))
-
+        connection.close()
     #----------Requêtes de modification------------
 
         # query = QSqlQuery("insert into Utilisateur (login) values ('david')")
