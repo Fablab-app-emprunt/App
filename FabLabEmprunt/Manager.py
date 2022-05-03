@@ -62,20 +62,20 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         #---------BDD----------------
 
     #-----------Déclaration de la connexion---------
-
-        # db = QSqlDatabase.addDatabase('QMYSQL')
-        # db.setHostName('localhost')
-        # db.setPort(3306)
-        # db.setDatabaseName("mabase")
-
+        from PyQt5.QtSql import QSqlDatabase
+        db = QSqlDatabase.addDatabase('QSQLITE')
+        db.setHostName('145.14.151.101')
+        db.setPort(3306)
+        db.setDatabaseName("u556968436_fablab")
+        print(db.open("u556968436_LaTeamDeLoick", "LoickRaison2022"))
     #-----------Ouverture d'une connexion---------
 
-        # if db.open("login", "motdepase"):
-        #     pass
+        if db.open("u556968436_LaTeamDeLoick", "LoickRaison2022"):
+            print("database connected")
 
     #-----------fermeture d'une connexion---------
 
-        # db.close()
+        db.close()
 
     #----------Requêtes de consultation------------
 
