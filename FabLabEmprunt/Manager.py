@@ -2,7 +2,7 @@ import sys
 from PyQt5 import QtGui
 from PyQt5 import QtWidgets, QtSql
 from PyQt5.uic import loadUi
-from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QWidget, QMessageBox
+from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QWidget, QMessageBox, QTableWidgetItem
 from PyQt5.QtSql import QSql, QSqlQuery, QSqlDatabase
 import mysql.connector
 
@@ -36,6 +36,7 @@ class EmpruntTypeOutils(QWidget):
         self.bouton_usinage.clicked.connect(self.usinage)
         self.boutonaccueil.clicked.connect(self.accueil)
 
+
     def accueil(self):
         widget.setCurrentIndex(0)
 
@@ -62,10 +63,11 @@ class EmpruntTypeOutils(QWidget):
         cursor = connection.cursor()
         cursor.execute(count_tools)
         outils = cursor.fetchall()
-        for data in outils:
-            print("Id = ", data[0], )
-            Data = outils
-            self.tableWidget.setRowCount(Data)
+        Data= outils
+        print(Data)
+        print(Data[0][0])
+        print(Data[1])
+
         connection.close()
         #----------Requêtes de modification------------
 
@@ -105,7 +107,7 @@ class EmpruntTypeOutils(QWidget):
         requete_Outils = 'USINAGE'
         self.conn_BDD(requete_Outils)
 
-class EmpruntAjout(QWidget, QSqlDatabase):
+class EmpruntAjout(QWidget, QSqlDatabase, Data):
     def __init__(self):
         super(EmpruntAjout, self).__init__()
         loadUi('empruntAjout.ui',self)
@@ -115,6 +117,16 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         self.boutonaccueil.setIcon(icon)
         self.today.clicked.connect(self.date)
         self.dateemprunt.clicked.connect(self.date)
+        self.table_Emprunt.setRowCount(39)
+        self.table_Emprunt.setColumnCount(4)
+        self.table_Emprunt.setHorizontalHeaderLabels(("Nom de l'Outil", "Référence", "Quantité", "Emprunt"))
+        print(Data)
+        # for row in Data:
+        #     for col in Data:
+        #         self.table_Emprunt.setItem(col, row, QTableWidgetItem(Data[row][col]))
+
+
+
 
 
     def accueil(self):
