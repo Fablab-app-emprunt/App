@@ -13,6 +13,8 @@ state = ''
 requete_Outils = ''
 Data = []
 Lelec = []
+Lbois = []
+Lusinage = []
 
 class PageAccueil(QWidget):
     def __init__(self):
@@ -133,6 +135,8 @@ class EmpruntAjout(QWidget, QSqlDatabase):
     def recupdata(self):
         global requete_Outils
         global Lelec
+        global Lbois
+        global Lusinage
         for row in range(self.table_Emprunt.rowCount()-1):
             L=[]
             if self.table_Emprunt.item(row,3).checkState() == QtCore.Qt.CheckState.Checked:
@@ -140,7 +144,10 @@ class EmpruntAjout(QWidget, QSqlDatabase):
                     L.append(self.table_Emprunt.item(row,0).text())
                 if requete_Outils == 'ELEC':
                     Lelec.append(L[0])
-        print(Lelec)
+                elif requete_Outils == 'BOIS':
+                    Lbois.append(L[0])
+                elif requete_Outils == 'USINAGE':
+                    Lusinage.append(L[0])
 
     def accueil(self):
         widget.setCurrentIndex(0)
@@ -171,5 +178,3 @@ if __name__ == "__main__":
         sys.exit(app.exec_())
     except :
         print("Exiting")
-
-.
