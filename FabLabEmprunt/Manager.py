@@ -1,11 +1,9 @@
 import sys
-from PyQt5 import QtGui
+from PyQt5 import QtGui, QtCore
 from PyQt5 import QtWidgets, QtSql
 from PyQt5.uic import loadUi
 
-from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QWidget, QMessageBox, QPushButton, QTableWidget, QTableWidgetItem, QCheckBox, QVBoxLayout
-
-from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QWidget, QMessageBox, QTableWidgetItem
+from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QWidget, QMessageBox, QTableWidgetItem, QCheckBox, QVBoxLayout
 
 from PyQt5.QtSql import QSql, QSqlQuery, QSqlDatabase
 import mysql.connector
@@ -83,6 +81,7 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         icon.addPixmap(QtGui.QPixmap('Capture d’écran 2022-04-14 153417.png'))
         self.boutonaccueil.setIcon(icon)
         self.today.clicked.connect(self.date)
+        self.rendreOutils_4.clicked.connect(self.recupdata)
         self.dateemprunt.clicked.connect(self.date)
 
         global state
@@ -111,8 +110,18 @@ class EmpruntAjout(QWidget, QSqlDatabase):
 
             cell = QTableWidgetItem(str(item[3]))
             self.table_Emprunt.setItem(row, col+2, cell)
+
+            chkBoxItem = QTableWidgetItem()
+            chkBoxItem.setFlags(QtCore.Qt.ItemIsUserCheckable | QtCore.Qt.ItemIsEnabled)
+            chkBoxItem.setCheckState(QtCore.Qt.Unchecked)
+            self.table_Emprunt.setItem(row,col+3,chkBoxItem)
             row += 1
             self.table_Emprunt.setRowCount(row+1)
+
+    def recupdata(self):
+        for row in range(self.table_Emprunt.rowCount()-1):
+            if self.table_Emprunt.item(row,3).checkState() == QtCore.Qt.CheckState.Checked:
+                print([self.table_Emprunt.item(row,col).text() for col in range(self.table_Emprunt.columnCount()-1)])
 
     def accueil(self):
        widget.setCurrentIndex(0)
