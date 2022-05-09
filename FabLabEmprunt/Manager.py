@@ -63,7 +63,6 @@ class EmpruntTypeOutils(QWidget):
         outils = cursor.fetchall()
         for row in outils:
             print("Id = ", row[0], )
-            self.tableWidget.setRowCount(row[0])
 
         connection.close()
         #----------Requêtes de modification------------
@@ -121,7 +120,8 @@ class EmpruntAjout(QWidget, QSqlDatabase):
 
     def date(self):
         value = self.today.selectedDate()
-        return value
+        date_in_string = str(value.toPyDate())
+        print(date_in_string)
 
 if __name__ == "__main__":
 
