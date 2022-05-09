@@ -12,6 +12,7 @@ import mysql.connector
 state = ''
 requete_Outils = ''
 Data = []
+Lelec = []
 
 class PageAccueil(QWidget):
     def __init__(self):
@@ -42,6 +43,7 @@ class EmpruntTypeOutils(QWidget):
         self.bouton_bois.clicked.connect(self.bois)
         self.bouton_usinage.clicked.connect(self.usinage)
         self.boutonaccueil.clicked.connect(self.accueil)
+        self.rendreOutils_4.clicked.connect(self.validate)
 
 
     def accueil(self):
@@ -70,6 +72,10 @@ class EmpruntTypeOutils(QWidget):
         widget.addWidget(page_choix_outils)
         widget.setCurrentIndex(4)
         print("Index usinage : ",widget.currentIndex())
+
+    def validate(self):
+        global Lelec
+        print(Lelec)
 
 class EmpruntAjout(QWidget, QSqlDatabase):
     def __init__(self):
@@ -125,9 +131,16 @@ class EmpruntAjout(QWidget, QSqlDatabase):
             header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
 
     def recupdata(self):
+        global requete_Outils
+        global Lelec
         for row in range(self.table_Emprunt.rowCount()-1):
+            L=[]
             if self.table_Emprunt.item(row,3).checkState() == QtCore.Qt.CheckState.Checked:
-                print([self.table_Emprunt.item(row,col).text() for col in range(self.table_Emprunt.columnCount()-1)])
+                for col in range(self.table_Emprunt.columnCount()-1):
+                    L.append(self.table_Emprunt.item(row,0).text())
+                if requete_Outils == 'ELEC':
+                    Lelec.append(L[0])
+        print(Lelec)
 
     def accueil(self):
        widget.setCurrentIndex(0)
