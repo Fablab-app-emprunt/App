@@ -1,24 +1,21 @@
 import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QDialog, QApplication, QLabel, QWidget, QMessageBox
-
+from PyQt5.uic import loadUi
 # from FabLabEmprunt.empruntTypeOutils import EmpruntTypeOutils
 
-class PageAccueil(QDialog):
+class PageAccueil(QWidget):
     def __init__(self):
-        from PyQt5.uic import loadUi
         super(PageAccueil,self).__init__()
         loadUi('pageAccueil.ui',self)
         self.rendreoutils.clicked.connect(self.goToRendreOutils)
         self.emprunteroutils.clicked.connect(self.goToEmprunterOutils)
 
+
     def goToRendreOutils(self):
         widget.setCurrentIndex(1)
 
     def goToEmprunterOutils(self):
-        # rendreoutils = EmpruntTypeOutils()
-        # widget.addWidget(rendreoutils)
-        # widget.setCurrentIndex(widget.currentIndex()+1)
         widget.setCurrentIndex(1)
 
 

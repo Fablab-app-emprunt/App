@@ -1,6 +1,7 @@
 import sys
 from PyQt5 import QtWidgets
 from PyQt5 import QtGui
+from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QDialog, QApplication, QLabel, QWidget, QMessageBox
 
 # from FabLabEmprunt.empruntajout import EmpruntAjout

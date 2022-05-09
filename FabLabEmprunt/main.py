@@ -13,24 +13,24 @@ from FabLabEmprunt.empruntTypeOutils import EmpruntTypeOutils
 from FabLabEmprunt.empruntajout import EmpruntAjout
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    app = QApplication(sys.argv)
-    widget = QtWidgets.QStackedWidget()
+app = QApplication(sys.argv)
+widget = QtWidgets.QStackedWidget()
 
-    page_accueil = PageAccueil()
-    page_choix_type_outils = EmpruntTypeOutils()
-    page_choix_outils = EmpruntAjout()
+page_accueil = PageAccueil()
+page_choix_type_outils = EmpruntTypeOutils()
+page_choix_outils = EmpruntAjout()
 
-    widget.addWidget(page_accueil)
-    widget.addWidget(page_choix_type_outils)
-    widget.addWidget(page_choix_outils)
+widget.addWidget(page_accueil)
+widget.addWidget(page_choix_type_outils)
+widget.addWidget(page_choix_outils)
 
-    widget.setFixedHeight(700)
-    widget.setFixedWidth(1000)
-    widget.show()
+widget.setFixedHeight(700)
+widget.setFixedWidth(1000)
+widget.show()
 
-    try:
-        sys.exit(app.exec_())
-    except :
-        print("Exiting")
+try:
+    sys.exit(app.exec_())
+except :
+    print("Exiting")

@@ -2,13 +2,14 @@ import sys
 from PyQt5 import QtWidgets
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import *
+from PyQt5.uic import loadUi
+from PyQt5 import QtGui
+from PyQt5.QtSql import QSql, QSqlQuery, QSqlDatabase
 
 # from FabLabEmprunt.pageAccueil import PageAccueil
 
-class EmpruntAjout(QDialog):
+class EmpruntAjout(QWidget, QSqlDatabase):
     def __init__(self):
-        from PyQt5.uic import loadUi
-        from PyQt5 import QtGui
         super(EmpruntAjout, self).__init__()
         loadUi('empruntAjout.ui',self)
         self.boutonaccueil.clicked.connect(self.accueil)
@@ -18,13 +19,8 @@ class EmpruntAjout(QDialog):
         self.today.clicked.connect(self.date)
         self.dateemprunt.clicked.connect(self.date)
 
-    def accueil(self):
-        # page_accueil = PageAccueil()
-        # widget.addWidget(page_accueil)
-        # print(widget.currentIndex())
-        # widget.setCurrentIndex(widget.currentIndex()+1)
-        # print(widget.currentIndex())
 
+    def accueil(self):
         widget.setCurrentIndex(0)
 
     def date(self):
