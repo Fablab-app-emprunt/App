@@ -253,7 +253,7 @@ border-bort
     </size>
    </property>
   </widget>
-  <widget class="QPushButton" name="rendreOutils_4">
+  <widget class="QPushButton" name="boutonvalider">
    <property name="geometry">
     <rect>
      <x>770</x>
