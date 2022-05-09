@@ -4,6 +4,12 @@ from PyQt5 import QtWidgets, QtSql
 from PyQt5.uic import loadUi
 
 from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QWidget, QMessageBox, QTableWidgetItem, QCheckBox, QVBoxLayout
+from PyQt5.QtWidgets import *
+from PyQt5.uic import *
+
+from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QWidget, QMessageBox, QPushButton, QTableWidget, QTableWidgetItem, QCheckBox, QVBoxLayout
+
+from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QWidget, QMessageBox, QTableWidgetItem
 
 from PyQt5.QtSql import QSql, QSqlQuery, QSqlDatabase
 import mysql.connector
@@ -33,6 +39,8 @@ class PageAccueil(QWidget):
         global state
         state = 'Emprunter'
         print("Index emprunteroutils : ",widget.currentIndex())
+
+
 
 class EmpruntTypeOutils(QWidget):
     def __init__(self):
@@ -92,6 +100,7 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         self.boutonvalider.clicked.connect(self.recupdata)
         self.dateemprunt.clicked.connect(self.date)
 
+
         global state
         global requete_Outils
         global Data
@@ -109,6 +118,9 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         cursor = connection.cursor()
         cursor.execute(count_tools)
         Data = cursor.fetchall()
+
+        self.boutonvalider.clicked.connect(self.goToPopUpListeEmprunts)
+
         for item in Data:
             cell = QTableWidgetItem(str(item[0]))
             self.table_Emprunt.setItem(row, col, cell)
@@ -125,6 +137,8 @@ class EmpruntAjout(QWidget, QSqlDatabase):
             self.table_Emprunt.setItem(row,col+3,chkBoxItem)
             row += 1
             self.table_Emprunt.setRowCount(row+1)
+
+
 
             header = self.table_Emprunt.horizontalHeader()
             header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
@@ -150,12 +164,52 @@ class EmpruntAjout(QWidget, QSqlDatabase):
                     Lusinage.append(L[0])
 
     def accueil(self):
-        widget.setCurrentIndex(0)
+       widget.setCurrentIndex(0)
 
     def date(self):
         value = self.today.selectedDate()
         date_in_string = str(value.toPyDate())
         print(date_in_string)
+
+
+
+
+
+    def goToPopUpListeEmprunts(self):
+        widget.setCurrentIndex(5)
+        global state
+        state = 'PopUpListeEmprunts'
+        popUpListeEmprunt = PopUpListeEmpruntsWidget()
+        widget.addWidget(popUpListeEmprunt)
+        print("Index PopUpListeEmprunts : ",widget.currentIndex())
+
+
+
+
+
+
+
+
+
+class PopUpListeEmpruntsWidget(QWidget, QSqlDatabase):
+    def __init__(self):
+        super(PopUpListeEmpruntsWidget, self).__init__()
+        loadUi('popUpListeEmprunts.ui', self)
+        self.boutoncroix.clicked.connect(self.reponseCroix)
+        self.boutonconfirmer.clicked.connect(self.reponseConfirmer)
+        self.pageAccueil = PageAccueil()
+
+
+    def reponseConfirmer(self):
+
+        self.pageAccueil.show()
+        self.close()
+
+    def reponseCroix(self):
+        self.close()
+
+
+
 
 if __name__ == "__main__":
 
