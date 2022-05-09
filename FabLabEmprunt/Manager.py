@@ -110,9 +110,11 @@ class EmpruntAjout(QWidget, QSqlDatabase):
             cell = QTableWidgetItem(str(item[0]))
             self.table_Emprunt.setItem(row, col, cell)
 
-            cell = QTableWidgetItem(str(item[3]))
+            cell = QTableWidgetItem(str(item[1]))
             self.table_Emprunt.setItem(row, col+1, cell)
 
+            cell = QTableWidgetItem(str(item[3]))
+            self.table_Emprunt.setItem(row, col+2, cell)
             row += 1
             self.table_Emprunt.setRowCount(row+1)
 
