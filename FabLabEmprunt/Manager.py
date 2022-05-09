@@ -7,7 +7,7 @@ from PyQt5.QtSql import QSql, QSqlQuery, QSqlDatabase
 import mysql.connector
 
 global requete_Outils
-requete_Outils = ''
+
 class PageAccueil(QWidget):
     def __init__(self):
         super(PageAccueil,self).__init__()
@@ -34,8 +34,6 @@ class EmpruntTypeOutils(QWidget):
         self.bouton_bois.clicked.connect(self.bois)
         self.bouton_usinage.clicked.connect(self.usinage)
         self.boutonaccueil.clicked.connect(self.accueil)
-        # self.requete_Outils = requete_Outils
-
 
     def accueil(self):
         widget.setCurrentIndex(0)
