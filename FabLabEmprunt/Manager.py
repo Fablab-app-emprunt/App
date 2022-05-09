@@ -2,7 +2,7 @@ import sys
 from PyQt5 import QtGui
 from PyQt5 import QtWidgets, QtSql
 from PyQt5.uic import loadUi
-from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QWidget, QMessageBox
+from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QWidget, QMessageBox, QPushButton, QTableWidget, QTableWidgetItem, QCheckBox, QVBoxLayout
 from PyQt5.QtSql import QSql, QSqlQuery, QSqlDatabase
 import mysql.connector
 
@@ -61,11 +61,7 @@ class EmpruntTypeOutils(QWidget):
         count_tools = "select * from Outils where departOutils_Outils = '" + requete_Outils + "'"
         cursor = connection.cursor()
         cursor.execute(count_tools)
-        outils = cursor.fetchall()
-        for data in outils:
-            print("Id = ", data[0], )
-            Data = outils
-            self.tableWidget.setRowCount(Data)
+        Data = cursor.fetchall()
         connection.close()
         #----------Requêtes de modification------------
 
@@ -115,6 +111,30 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         self.boutonaccueil.setIcon(icon)
         self.today.clicked.connect(self.date)
         self.dateemprunt.clicked.connect(self.date)
+        self.table_Emprunt.setColumnCount(2)
+        self.table_Emprunt.rowCount()
+        self.table_Emprunt.setHorizontalHeaderLabels(['id','Name','reference'])
+        row = self.table_Emprunt.rowCount()
+        self.table_Emprunt.setRowCount(row+1)
+        col = 0
+        connection = mysql.connector.connect(user='u556968436_LaTeamDeLoick', password='LoickRaison2022',
+                                             host='145.14.151.101',
+                                             database='u556968436_fablab')
+        count_tools = "select * from Outils where departOutils_Outils = 'ELEC'"
+        cursor = connection.cursor()
+        cursor.execute(count_tools)
+        Data = cursor.fetchall()
+        connection.close()
+        for item in Data:
+            cell = QTableWidgetItem(str(item[0]))
+            self.table_Emprunt.setItem(row, col, cell)
+
+            cell = QTableWidgetItem(str(item[3]))
+            self.table_Emprunt.setItem(row, col+1, cell)
+
+            row += 1
+            self.table_Emprunt.setRowCount(row+1)
+
 
 
     def accueil(self):
