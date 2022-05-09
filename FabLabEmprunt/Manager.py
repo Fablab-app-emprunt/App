@@ -118,6 +118,12 @@ class EmpruntAjout(QWidget, QSqlDatabase):
             row += 1
             self.table_Emprunt.setRowCount(row+1)
 
+            header = self.table_Emprunt.horizontalHeader()
+            header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
+            header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
+            header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
+            header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
+
     def recupdata(self):
         for row in range(self.table_Emprunt.rowCount()-1):
             if self.table_Emprunt.item(row,3).checkState() == QtCore.Qt.CheckState.Checked:
