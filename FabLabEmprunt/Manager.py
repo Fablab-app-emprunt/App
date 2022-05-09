@@ -6,6 +6,8 @@ from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QWidget, QMessageBox
 from PyQt5.QtSql import QSql, QSqlQuery, QSqlDatabase
 import mysql.connector
 
+global requete_Outils
+requete_Outils = 'ELEC'
 
 class PageAccueil(QWidget):
     def __init__(self):
@@ -38,16 +40,17 @@ class EmpruntTypeOutils(QWidget):
     def accueil(self):
         widget.setCurrentIndex(0)
 
-
+    def conn_BDD(self):
     def bois(self):
         widget.setCurrentIndex(2)
+        requete_Outils = 'BOIS'
 
     def elec(self):
         widget.setCurrentIndex(2)
-
+        requete_Outils = 'ELEC'
     def usinage(self):
         widget.setCurrentIndex(2)
-
+        requete_Outils = 'USINAGE'
 
 class EmpruntAjout(QWidget, QSqlDatabase):
     def __init__(self):
@@ -66,17 +69,24 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         connection = mysql.connector.connect(user='u556968436_LaTeamDeLoick', password='LoickRaison2022',
                                              host='145.14.151.101',
                                              database='u556968436_fablab')
-        sql_select_Query = "select * from Personnes"
+        # sql_select_Query = "select * from Personnes"
+        # cursor = connection.cursor()
+        # cursor.execute(sql_select_Query)
+        # # get all records
+        # records = cursor.fetchall()
+        # print("Total number of rows in table: ", cursor.rowcount)
+        #
+        # print("\nPrinting each row")
+        # for row in records:
+        #     print("Id = ", row[1], )
+        #
+        # connection.close()
+        count_tools = "select count(*) from Outils where departOutils_Outils = ' " + requete_Outils + "'"
         cursor = connection.cursor()
-        cursor.execute(sql_select_Query)
-        # get all records
-        records = cursor.fetchall()
-        print("Total number of rows in table: ", cursor.rowcount)
-
-        print("\nPrinting each row")
-        for row in records:
-            print("Id = ", row[1], )
-
+        cursor.execute(count_tools)
+        outils = cursor.fetchall()
+        for row in outils:
+            print("Id = ", row[0], )
         connection.close()
     #----------Requêtes de modification------------
 
@@ -84,13 +94,13 @@ class EmpruntAjout(QWidget, QSqlDatabase):
 
         #                OU
 
-        # query = QSqlQuery()
-        # query.exec_("insert into Utilisateur (login) values ('david')")
-
-    #----------Requêtes préparées------------ (utile lorsqu'on utilise des variables)
-
-        # query = QSqlQuery()
-        # query.prepare("insert into Utilisateur (login) values (:nom)")
+    #         # query = QSqlQuery()
+    #         # query.exec_("insert into Utilisateur (login) values ('david')")
+    #
+    #     #----------Requêtes préparées------------ (utile lorsqu'on utilise des variables)
+    #
+    #         # query = QSqlQuery()
+    #         # query.prepare("insert into Utilisateur (login) values (:nom)")
         # query.bindValue(":nom", "david")
         # query.exec_()
 
