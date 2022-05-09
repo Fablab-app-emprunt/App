@@ -2,7 +2,11 @@ import sys
 from PyQt5 import QtGui
 from PyQt5 import QtWidgets, QtSql
 from PyQt5.uic import loadUi
+
 from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QWidget, QMessageBox, QPushButton, QTableWidget, QTableWidgetItem, QCheckBox, QVBoxLayout
+
+from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QWidget, QMessageBox, QTableWidgetItem
+
 from PyQt5.QtSql import QSql, QSqlQuery, QSqlDatabase
 import mysql.connector
 
@@ -36,6 +40,7 @@ class EmpruntTypeOutils(QWidget):
         self.bouton_usinage.clicked.connect(self.usinage)
         self.boutonaccueil.clicked.connect(self.accueil)
 
+
     def accueil(self):
         widget.setCurrentIndex(0)
 
@@ -58,11 +63,6 @@ class EmpruntTypeOutils(QWidget):
         #     print("Id = ", row[1], )
         #
         # connection.close()
-        count_tools = "select * from Outils where departOutils_Outils = '" + requete_Outils + "'"
-        cursor = connection.cursor()
-        cursor.execute(count_tools)
-        Data = cursor.fetchall()
-        connection.close()
         #----------Requêtes de modification------------
 
         # query = QSqlQuery("insert into Utilisateur (login) values ('david')")
@@ -111,6 +111,7 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         self.boutonaccueil.setIcon(icon)
         self.today.clicked.connect(self.date)
         self.dateemprunt.clicked.connect(self.date)
+
         self.table_Emprunt.setColumnCount(2)
         self.table_Emprunt.rowCount()
         self.table_Emprunt.setHorizontalHeaderLabels(['id','Name','reference'])
@@ -134,6 +135,9 @@ class EmpruntAjout(QWidget, QSqlDatabase):
 
             row += 1
             self.table_Emprunt.setRowCount(row+1)
+
+
+
 
 
 
