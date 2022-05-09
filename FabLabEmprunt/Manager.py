@@ -62,9 +62,9 @@ class EmpruntTypeOutils(QWidget):
         cursor = connection.cursor()
         cursor.execute(count_tools)
         outils = cursor.fetchall()
-        print(outils)
         for data in outils:
             print("Id = ", data[0], )
+            Data = outils
             self.tableWidget.setRowCount(Data)
         connection.close()
         #----------Requêtes de modification------------
