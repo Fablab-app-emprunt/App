@@ -482,7 +482,7 @@ border-bort</string>
     <string>Valider</string>
    </property>
   </widget>
-  <widget class="QTableWidget" name="tableWidget">
+  <widget class="QTableWidget" name="table_Emprunt">
    <property name="geometry">
     <rect>
      <x>80</x>

@@ -7,6 +7,7 @@ from PyQt5.QtSql import QSql, QSqlQuery, QSqlDatabase
 import mysql.connector
 
 global requete_Outils
+global Data
 
 class PageAccueil(QWidget):
     def __init__(self):
@@ -57,13 +58,14 @@ class EmpruntTypeOutils(QWidget):
         #     print("Id = ", row[1], )
         #
         # connection.close()
-        count_tools = "select count(*) from Outils where departOutils_Outils = '" + requete_Outils + "'"
+        count_tools = "select * from Outils where departOutils_Outils = '" + requete_Outils + "'"
         cursor = connection.cursor()
         cursor.execute(count_tools)
         outils = cursor.fetchall()
-        for row in outils:
-            print("Id = ", row[0], )
-
+        print(outils)
+        for data in outils:
+            print("Id = ", data[0], )
+            self.tableWidget.setRowCount(Data)
         connection.close()
         #----------Requêtes de modification------------
 
