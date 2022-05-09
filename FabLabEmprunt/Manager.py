@@ -63,6 +63,8 @@ class EmpruntTypeOutils(QWidget):
         outils = cursor.fetchall()
         for row in outils:
             print("Id = ", row[0], )
+            self.tableWidget.setRowCount(row[0])
+
         connection.close()
         #----------Requêtes de modification------------
 
@@ -90,6 +92,7 @@ class EmpruntTypeOutils(QWidget):
     def bois(self):
         widget.setCurrentIndex(2)
         requete_Outils = 'BOIS'
+        self.conn_BDD(requete_Outils)
 
     def elec(self):
         widget.setCurrentIndex(2)
@@ -99,6 +102,7 @@ class EmpruntTypeOutils(QWidget):
     def usinage(self):
         widget.setCurrentIndex(2)
         requete_Outils = 'USINAGE'
+        self.conn_BDD(requete_Outils)
 
 class EmpruntAjout(QWidget, QSqlDatabase):
     def __init__(self):
