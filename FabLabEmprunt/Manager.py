@@ -22,19 +22,16 @@ class PageAccueil(QWidget):
         self.rendreoutils.clicked.connect(self.goToRendreOutils)
         self.emprunteroutils.clicked.connect(self.goToEmprunterOutils)
 
-
     def goToRendreOutils(self):
         widget.setCurrentIndex(1)
         global state
         state = 'Rendre'
-        print(state)
-
+        print("Index rendreoutils : ",widget.currentIndex())
     def goToEmprunterOutils(self):
         widget.setCurrentIndex(1)
         global state
         state = 'Emprunter'
-        print(state)
-
+        print("Index emprunteroutils : ",widget.currentIndex())
 
 class EmpruntTypeOutils(QWidget):
     def __init__(self):
@@ -51,14 +48,6 @@ class EmpruntTypeOutils(QWidget):
 
     def accueil(self):
         widget.setCurrentIndex(0)
-        print("Index Accueil : ",widget.currentIndex())
-
-    def bois(self):
-        global requete_Outils
-        requete_Outils = 'BOIS'
-        page_choix_outils = EmpruntAjout()
-        widget.addWidget(page_choix_outils)
-        widget.setCurrentIndex(2)
 
     def elec(self):
         global requete_Outils
@@ -66,14 +55,23 @@ class EmpruntTypeOutils(QWidget):
         page_choix_outils = EmpruntAjout()
         widget.addWidget(page_choix_outils)
         widget.setCurrentIndex(2)
+        print("Index elec : ",widget.currentIndex())
+
+    def bois(self):
+        global requete_Outils
+        requete_Outils = 'BOIS'
+        page_choix_outils = EmpruntAjout()
+        widget.addWidget(page_choix_outils)
+        widget.setCurrentIndex(3)
+        print("Index bois : ",widget.currentIndex())
 
     def usinage(self):
         global requete_Outils
-        widget.setCurrentIndex(2)
         requete_Outils = 'USINAGE'
         page_choix_outils = EmpruntAjout()
         widget.addWidget(page_choix_outils)
-        widget.setCurrentIndex(2)
+        widget.setCurrentIndex(4)
+        print("Index usinage : ",widget.currentIndex())
 
 class EmpruntAjout(QWidget, QSqlDatabase):
     def __init__(self):
@@ -90,8 +88,6 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         global state
         global requete_Outils
         global Data
-        print(requete_Outils)
-        print("valeur : ",state)
         self.table_Emprunt.setColumnCount(4)
         self.table_Emprunt.rowCount()
         self.table_Emprunt.setHorizontalHeaderLabels(['id','Name','Quantity',state])
@@ -142,7 +138,7 @@ if __name__ == "__main__":
     widget.setFixedHeight(700)
     widget.setFixedWidth(1000)
     widget.show()
-
+    print("Index Accueil : ",widget.currentIndex())
     try:
         sys.exit(app.exec_())
     except :
