@@ -9,7 +9,7 @@ from PyQt5.uic import *
 
 from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QWidget, QMessageBox, QPushButton, QTableWidget, QTableWidgetItem, QCheckBox, QVBoxLayout
 
-from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QWidget, QMessageBox, QTableWidgetItem
+from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QWidget, QMessageBox, QTableWidgetItem, QComboBox
 
 from PyQt5.QtSql import QSql, QSqlQuery, QSqlDatabase
 import mysql.connector
@@ -152,8 +152,18 @@ class EmpruntAjout(QWidget, QSqlDatabase):
             cell = QTableWidgetItem(str(item[1]))
             self.table_Emprunt.setItem(row, col+1, cell)
 
-            cell = QTableWidgetItem(str(item[3]))
-            self.table_Emprunt.setItem(row, col+2, cell)
+            # cell = QTableWidgetItem(str(item[3]))
+            # self.table_Emprunt.setItem(row, col+2, cell)
+
+#-----------FAIRE UNE LISTE DEROULANTE POUR CHOISIR LA QUANTITE DE CHAQUUE OUTIL A EMPRUNTER---------------
+            L = []
+            for i in range(item[3] - item[5] + 1):
+                L.append(str(i))
+                i+=1
+            combo = QComboBox()
+            for i in L:
+                combo.addItem(i)
+            self.table_Emprunt.setCellWidget(row, col+2, combo)
 
             chkBoxItem = QTableWidgetItem()
             chkBoxItem.setFlags(QtCore.Qt.ItemIsUserCheckable | QtCore.Qt.ItemIsEnabled)
