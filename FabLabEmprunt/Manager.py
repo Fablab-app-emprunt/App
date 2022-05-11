@@ -33,14 +33,13 @@ class PageAccueil(QWidget):
         widget.setCurrentIndex(1)
         global state
         state = 'Rendre'
-        print("Index rendreoutils : ",widget.currentIndex())
+        print("Index rendreoutils : ",widget.indexOf(page_choix_type_outils))
+
     def goToEmprunterOutils(self):
         widget.setCurrentIndex(1)
         global state
         state = 'Emprunter'
-        print("Index emprunteroutils : ",widget.currentIndex())
-
-
+        print("Index emprunteroutils : ",widget.indexOf(page_choix_type_outils))
 
 class EmpruntTypeOutils(QWidget):
     def __init__(self):
@@ -55,7 +54,6 @@ class EmpruntTypeOutils(QWidget):
         self.boutonaccueil.clicked.connect(self.accueil)
         self.rendreOutils_4.clicked.connect(self.validate)
 
-
     def accueil(self):
         widget.setCurrentIndex(0)
 
@@ -63,25 +61,31 @@ class EmpruntTypeOutils(QWidget):
         global requete_Outils
         requete_Outils = 'ELEC'
         page_choix_outils = EmpruntAjout()
-        widget.addWidget(page_choix_outils)
+        widget.insertWidget(2,page_choix_outils)
         widget.setCurrentIndex(2)
-        print("Index elec : ",widget.currentIndex())
+        print("Index elec : ",widget.indexOf(page_choix_outils))
+        popUpListeEmprunt = PopUpListeEmpruntsWidget()
+        widget.addWidget(popUpListeEmprunt)
 
     def bois(self):
         global requete_Outils
         requete_Outils = 'BOIS'
         page_choix_outils = EmpruntAjout()
-        widget.addWidget(page_choix_outils)
-        widget.setCurrentIndex(3)
-        print("Index bois : ",widget.currentIndex())
+        widget.insertWidget(4,page_choix_outils)
+        widget.setCurrentIndex(4)
+        print("Index elec : ",widget.indexOf(page_choix_outils))
+        popUpListeEmprunt = PopUpListeEmpruntsWidget()
+        widget.addWidget(popUpListeEmprunt)
 
     def usinage(self):
         global requete_Outils
         requete_Outils = 'USINAGE'
         page_choix_outils = EmpruntAjout()
         widget.addWidget(page_choix_outils)
-        widget.setCurrentIndex(4)
-        print("Index usinage : ",widget.currentIndex())
+        widget.setCurrentIndex(6)
+        print("Index elec : ",widget.indexOf(page_choix_outils))
+        popUpListeEmprunt = PopUpListeEmpruntsWidget()
+        widget.addWidget(popUpListeEmprunt)
 
     def validate(self):
         global Lelec
@@ -99,7 +103,7 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         self.today.clicked.connect(self.date)
         self.boutonvalider.clicked.connect(self.recupdata)
         self.dateemprunt.clicked.connect(self.date)
-
+        self.boutonvalider.clicked.connect(self.goToPopUpListeEmprunts)
 
         global state
         global requete_Outils
@@ -119,8 +123,7 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         cursor.execute(count_tools)
         Data = cursor.fetchall()
 
-        self.boutonvalider.clicked.connect(self.goToPopUpListeEmprunts)
-
+#-------------REMPLIR LES TABLEAUX---------------------
         for item in Data:
             cell = QTableWidgetItem(str(item[0]))
             self.table_Emprunt.setItem(row, col, cell)
@@ -137,8 +140,6 @@ class EmpruntAjout(QWidget, QSqlDatabase):
             self.table_Emprunt.setItem(row,col+3,chkBoxItem)
             row += 1
             self.table_Emprunt.setRowCount(row+1)
-
-
 
             header = self.table_Emprunt.horizontalHeader()
             header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
@@ -171,23 +172,9 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         date_in_string = str(value.toPyDate())
         print(date_in_string)
 
-
-
-
-
     def goToPopUpListeEmprunts(self):
-        widget.setCurrentIndex(5)
-        global state
-        state = 'PopUpListeEmprunts'
-        popUpListeEmprunt = PopUpListeEmpruntsWidget()
-        widget.addWidget(popUpListeEmprunt)
+        widget.setCurrentIndex(widget.currentIndex()+1)
         print("Index PopUpListeEmprunts : ",widget.currentIndex())
-
-
-
-
-
-
 
 
 
@@ -197,19 +184,23 @@ class PopUpListeEmpruntsWidget(QWidget, QSqlDatabase):
         loadUi('popUpListeEmprunts.ui', self)
         self.boutoncroix.clicked.connect(self.reponseCroix)
         self.boutonconfirmer.clicked.connect(self.reponseConfirmer)
-        self.pageAccueil = PageAccueil()
+        # self.pageAccueil = PageAccueil()
 
 
     def reponseConfirmer(self):
 
-        self.pageAccueil.show()
-        self.close()
+        # self.pageAccueil.show()
+        # self.close()
+        widget.setCurrentIndex(1)
 
     def reponseCroix(self):
-        self.close()
+        widget.setCurrentIndex(widget.currentIndex()-1)
 
 
 
+
+    # def validate(self):
+    #     pass
 
 if __name__ == "__main__":
 
@@ -227,7 +218,8 @@ if __name__ == "__main__":
     widget.setFixedHeight(700)
     widget.setFixedWidth(1000)
     widget.show()
-    print("Index Accueil : ",widget.currentIndex())
+    print("Index Accueil : ",widget.indexOf(page_accueil))
+
     try:
         sys.exit(app.exec_())
     except :
