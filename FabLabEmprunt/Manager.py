@@ -35,6 +35,35 @@ class PageAccueil(QWidget):
         state = 'Rendre'
         print("Index rendreoutils : ",widget.indexOf(page_choix_type_outils))
 
+        #------------CREATION PAGES ELEC BOIS USINAGE ET LES POPUPS--------------------------------
+        #-----ELEC ET POPUP ELEC---------------------
+        global requete_Outils
+        requete_Outils = 'ELEC'
+        page_choix_outils_elec = EmpruntAjout()
+        widget.insertWidget(2,page_choix_outils_elec)
+        print("Index elec : ",widget.indexOf(page_choix_outils_elec))
+        pop_up_elec = PopUpListeEmpruntsWidget()
+        widget.insertWidget(3,pop_up_elec)
+        print("Index popUp elec : ",widget.indexOf(pop_up_elec))
+
+        #----------BOIS ET POPUP BOIS----------------------
+        requete_Outils = 'BOIS'
+        page_choix_outils_bois = EmpruntAjout()
+        widget.insertWidget(4,page_choix_outils_bois)
+        print("Index bois : ",widget.indexOf(page_choix_outils_bois))
+        pop_up_bois = PopUpListeEmpruntsWidget()
+        widget.insertWidget(5,pop_up_bois)
+        print("Index popUp bois : ",widget.indexOf(pop_up_bois))
+
+        #--------------USINAGE ET POPUP USINAGE-------------------
+        requete_Outils = 'USINAGE'
+        page_choix_outils_usinage = EmpruntAjout()
+        widget.insertWidget(6,page_choix_outils_usinage)
+        print("Index usinage : ",widget.indexOf(page_choix_outils_usinage))
+        pop_up_usinage = PopUpListeEmpruntsWidget()
+        widget.insertWidget(7,pop_up_usinage)
+        print("Index popUp usinage : ",widget.indexOf(pop_up_usinage))
+
     def goToEmprunterOutils(self):
         widget.setCurrentIndex(1)
         global state
@@ -58,34 +87,14 @@ class EmpruntTypeOutils(QWidget):
         widget.setCurrentIndex(0)
 
     def elec(self):
-        global requete_Outils
-        requete_Outils = 'ELEC'
-        page_choix_outils = EmpruntAjout()
-        widget.insertWidget(2,page_choix_outils)
         widget.setCurrentIndex(2)
-        print("Index elec : ",widget.indexOf(page_choix_outils))
-        popUpListeEmprunt = PopUpListeEmpruntsWidget()
-        widget.addWidget(popUpListeEmprunt)
+
 
     def bois(self):
-        global requete_Outils
-        requete_Outils = 'BOIS'
-        page_choix_outils = EmpruntAjout()
-        widget.insertWidget(4,page_choix_outils)
         widget.setCurrentIndex(4)
-        print("Index elec : ",widget.indexOf(page_choix_outils))
-        popUpListeEmprunt = PopUpListeEmpruntsWidget()
-        widget.addWidget(popUpListeEmprunt)
 
     def usinage(self):
-        global requete_Outils
-        requete_Outils = 'USINAGE'
-        page_choix_outils = EmpruntAjout()
-        widget.addWidget(page_choix_outils)
         widget.setCurrentIndex(6)
-        print("Index elec : ",widget.indexOf(page_choix_outils))
-        popUpListeEmprunt = PopUpListeEmpruntsWidget()
-        widget.addWidget(popUpListeEmprunt)
 
     def validate(self):
         global Lelec
@@ -214,6 +223,7 @@ if __name__ == "__main__":
     widget.addWidget(page_accueil)
     widget.addWidget(page_choix_type_outils)
     # widget.addWidget(page_choix_outils)
+
 
     widget.setFixedHeight(700)
     widget.setFixedWidth(1000)
