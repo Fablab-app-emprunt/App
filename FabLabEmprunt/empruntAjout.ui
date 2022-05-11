@@ -491,6 +491,9 @@ border-bort</string>
      <height>251</height>
     </rect>
    </property>
+   <property name="columnCount">
+    <number>0</number>
+   </property>
   </widget>
   <widget class="QPushButton" name="rendreOutils_6">
    <property name="geometry">
@@ -718,7 +721,7 @@ color: rgb(255, 170, 0);
 border-bort</string>
    </property>
    <property name="text">
-    <string>Clear All</string>
+    <string>Retour</string>
    </property>
   </widget>
   <widget class="QCalendarWidget" name="today">

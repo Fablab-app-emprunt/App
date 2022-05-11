@@ -82,16 +82,31 @@ class EmpruntTypeOutils(QWidget):
 
     def elec(self):
         widget.setCurrentIndex(2)
+        global requete_Outils
+        requete_Outils = 'ELEC'
 
     def bois(self):
         widget.setCurrentIndex(4)
+        global requete_Outils
+        requete_Outils = 'BOIS'
 
     def usinage(self):
         widget.setCurrentIndex(6)
+        global requete_Outils
+        requete_Outils = 'USINAGE'
 
     def validate(self):
         global Lelec
-        print(Lelec)
+        global Lbois
+        global Lusinage
+        Lfinal=[]
+        for i in range(len(Lelec)):
+            Lfinal.append(Lelec[i])
+        for i in range(len(Lbois)):
+            Lfinal.append(Lbois[i])
+        for i in range(len(Lusinage)):
+            Lfinal.append(Lusinage[i])
+        print(Lfinal)
 
 class EmpruntAjout(QWidget, QSqlDatabase):
     def __init__(self):
@@ -106,6 +121,7 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         self.boutonvalider.clicked.connect(self.recupdata)
         self.dateemprunt.clicked.connect(self.date)
         self.boutonvalider.clicked.connect(self.goToPopUpListeEmprunts)
+        self.rendreOutils_6.clicked.connect(self.returntypeoutils)
 
         global state
         global requete_Outils
@@ -119,8 +135,11 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         connection = mysql.connector.connect(user='u556968436_LaTeamDeLoick', password='LoickRaison2022',
                                              host='145.14.151.101',
                                              database='u556968436_fablab')
-
-        count_tools = "select * from Outils where departOutils_Outils = '"+requete_Outils+"'"
+        if state == 'Emprunter':
+            count_tools = "select * from Outils where departOutils_Outils = '"+requete_Outils+"'"
+        elif state == 'Rendre':
+            count_tools = "select * from Outils where departOutils_Outils = '"+requete_Outils+"'"
+            print("Pas encore fait")
         cursor = connection.cursor()
         cursor.execute(count_tools)
         Data = cursor.fetchall()
@@ -154,20 +173,37 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         global Lelec
         global Lbois
         global Lusinage
+        if requete_Outils == 'ELEC':
+            Lelec = []
+        elif requete_Outils == 'BOIS':
+            Lbois = []
+        elif requete_Outils == 'USINAGE':
+            Lusinage = []
         for row in range(self.table_Emprunt.rowCount()-1):
             L=[]
             if self.table_Emprunt.item(row,3).checkState() == QtCore.Qt.CheckState.Checked:
-                for col in range(self.table_Emprunt.columnCount()-1):
+                for col in range(self.table_Emprunt.columnCount()-3):
                     L.append(self.table_Emprunt.item(row,0).text())
+                    print(L)
                 if requete_Outils == 'ELEC':
                     Lelec.append(L[0])
                 elif requete_Outils == 'BOIS':
                     Lbois.append(L[0])
                 elif requete_Outils == 'USINAGE':
                     Lusinage.append(L[0])
+        print(Lelec)
+        print(Lbois)
+        print(Lusinage)
 
     def accueil(self):
        widget.setCurrentIndex(0)
+
+    def returntypeoutils(self):
+        global state
+        if state == 'Emprunter':
+            widget.setCurrentIndex(1)
+        elif state == 'Rendre' :
+            widget.setCurrentIndex(1)
 
     def date(self):
         value = self.today.selectedDate()
