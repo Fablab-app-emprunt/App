@@ -17,6 +17,9 @@ import mysql.connector
 
 state = ''
 requete_Outils = ''
+Requete_Outils = ['ELEC','BOIS','USINAGE']
+page_choix_outils = ['page_choix_outils_elec','page_choix_outils_bois','page_choix_outils_usinage']
+pop_up = ['pop_up_elec','pop_up_bois','pop_up_usinage']
 Data = []
 Lelec = []
 Lbois = []
@@ -34,41 +37,32 @@ class PageAccueil(QWidget):
         global state
         state = 'Rendre'
         print("Index rendreoutils : ",widget.indexOf(page_choix_type_outils))
-
-        #------------CREATION PAGES ELEC BOIS USINAGE ET LES POPUPS--------------------------------
-        #-----ELEC ET POPUP ELEC---------------------
-        global requete_Outils
-        requete_Outils = 'ELEC'
-        page_choix_outils_elec = EmpruntAjout()
-        widget.insertWidget(2,page_choix_outils_elec)
-        print("Index elec : ",widget.indexOf(page_choix_outils_elec))
-        pop_up_elec = PopUpListeEmpruntsWidget()
-        widget.insertWidget(3,pop_up_elec)
-        print("Index popUp elec : ",widget.indexOf(pop_up_elec))
-
-        #----------BOIS ET POPUP BOIS----------------------
-        requete_Outils = 'BOIS'
-        page_choix_outils_bois = EmpruntAjout()
-        widget.insertWidget(4,page_choix_outils_bois)
-        print("Index bois : ",widget.indexOf(page_choix_outils_bois))
-        pop_up_bois = PopUpListeEmpruntsWidget()
-        widget.insertWidget(5,pop_up_bois)
-        print("Index popUp bois : ",widget.indexOf(pop_up_bois))
-
-        #--------------USINAGE ET POPUP USINAGE-------------------
-        requete_Outils = 'USINAGE'
-        page_choix_outils_usinage = EmpruntAjout()
-        widget.insertWidget(6,page_choix_outils_usinage)
-        print("Index usinage : ",widget.indexOf(page_choix_outils_usinage))
-        pop_up_usinage = PopUpListeEmpruntsWidget()
-        widget.insertWidget(7,pop_up_usinage)
-        print("Index popUp usinage : ",widget.indexOf(pop_up_usinage))
+        self.creationPages()
 
     def goToEmprunterOutils(self):
         widget.setCurrentIndex(1)
         global state
         state = 'Emprunter'
         print("Index emprunteroutils : ",widget.indexOf(page_choix_type_outils))
+        self.creationPages()
+
+    def creationPages(self):
+#----------------CREATION PAGES ELEC BOIS USINAGE ET LES POPUPS--------------------------------
+        global requete_Outils
+        global Requete_Outils
+        global page_choix_outils
+        global pop_up
+        print(requete_Outils)
+        for i in range(3):
+            requete_Outils = Requete_Outils[i]
+            print(requete_Outils)
+            page_choix_outils[i] = EmpruntAjout()
+            widget.insertWidget(2*i+2,page_choix_outils[i])
+            print("Index of : ", requete_Outils,' is ', widget.indexOf(page_choix_outils[i]))
+            pop_up[i] = PopUpListeEmpruntsWidget()
+            widget.insertWidget(2*i+3,pop_up[i])
+            print("Index of : pop up ", requete_Outils,' is ', widget.indexOf(pop_up[i]))
+
 
 class EmpruntTypeOutils(QWidget):
     def __init__(self):
@@ -88,7 +82,6 @@ class EmpruntTypeOutils(QWidget):
 
     def elec(self):
         widget.setCurrentIndex(2)
-
 
     def bois(self):
         widget.setCurrentIndex(4)
