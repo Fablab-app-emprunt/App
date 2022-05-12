@@ -179,6 +179,7 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         connection.close()
 
     def recupdata(self):
+
         global requete_Outils
         global Lelec
         global Lbois
@@ -194,13 +195,18 @@ class EmpruntAjout(QWidget, QSqlDatabase):
             if self.table_Emprunt.item(row,3).checkState() == QtCore.Qt.CheckState.Checked:
                 for col in range(self.table_Emprunt.columnCount()-3):
                     L.append(self.table_Emprunt.item(row,1).text())
+                    # L.append(self.table_Emprunt.item(row,2).currentText())
+                    print("quantite",int(self.table_Emprunt.cellWidget(row,2).currentText()))
                     print(L)
                 if requete_Outils == 'ELEC':
                     Lelec.append(L[0])
+                    Lelec.append(int(self.table_Emprunt.cellWidget(row,2).currentText()))
                 elif requete_Outils == 'BOIS':
                     Lbois.append(L[0])
+                    Lbois.append(int(self.table_Emprunt.cellWidget(row,2).currentText()))
                 elif requete_Outils == 'USINAGE':
                     Lusinage.append(L[0])
+                    Lusinage.append(int(self.table_Emprunt.cellWidget(row,2).currentText()))
         print('Lelec',Lelec)
         print('Lbois',Lbois)
         print('Lusinage',Lusinage)
