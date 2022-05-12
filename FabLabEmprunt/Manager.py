@@ -1,5 +1,5 @@
-import os
-os.system('pip install -r requirements.txt')
+# import os
+# os.system('pip install -r requirements.txt')
 import sys
 from PyQt5 import QtGui, QtCore
 from PyQt5 import QtWidgets, QtSql
@@ -235,7 +235,7 @@ class EmpruntAjout(QWidget, QSqlDatabase):
             L=[]
             if self.table_Emprunt.item(row,3).checkState() == QtCore.Qt.CheckState.Checked:
                 for col in range(self.table_Emprunt.columnCount()-3):
-                    L.append(self.table_Emprunt.item(row,0).text())
+                    L.append(self.table_Emprunt.item(row,1).text())
                     print(L)
                 if requete_Outils == 'ELEC':
                     Lelec.append(L[0])
@@ -272,16 +272,15 @@ class PopUpListeEmpruntsWidget(QWidget, QSqlDatabase):
         loadUi('popUpListeEmprunts.ui', self)
         self.boutoncroix.clicked.connect(self.reponseCroix)
         self.boutonconfirmer.clicked.connect(self.reponseConfirmer)
-        self.table_Recap.setColumnCount(3)
+        self.table_Recap.setColumnCount(2)
         self.table_Recap.rowCount()
-        self.table_Recap.setHorizontalHeaderLabels(['id',"Nom de l'outils",'Quantité'])
+        self.table_Recap.setHorizontalHeaderLabels(["Nom de l'outils",'Quantité'])
         row = self.table_Recap.rowCount()
         self.table_Recap.setRowCount(len(Lfinal))
         col = 0
         header = self.table_Recap.horizontalHeader()
-        header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
-        header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
-        header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
 
 #------------------------------------REMPLIR LES TABLEAUX------------------------------------------------------------
         for item in Lfinal:
@@ -290,9 +289,6 @@ class PopUpListeEmpruntsWidget(QWidget, QSqlDatabase):
             cell = QTableWidgetItem(str(item))
             self.table_Recap.setItem(row, col, cell)
             row+=1
-
-            # cell = QTableWidgetItem(str(item[1]))
-            # self.table_Recap.setItem(row, col+1, cell)
 
     def reponseConfirmer(self):
         widget.setCurrentIndex(0)
