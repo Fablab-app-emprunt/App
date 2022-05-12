@@ -39,7 +39,7 @@ class PageAccueil(QWidget):
         global state
         state = 'Rendre'
         print("Index rendreoutils : ",widget.indexOf(page_choix_type_outils))
-        page_rendre_outils = EmpruntAjout()
+        page_rendre_outils = RendreOutils()
         widget.insertWidget(2,page_rendre_outils)
         widget.setCurrentIndex(2)
 
@@ -264,6 +264,20 @@ class EmpruntAjout(QWidget, QSqlDatabase):
     def goToChoixTypeOutils(self):
         widget.setCurrentIndex(1)
 
+class RendreOutils(QWidget, QSqlDatabase):
+    def __init__(self):
+        super(RendreOutils, self).__init__()
+        loadUi('rendreOutils.ui', self)
+        self.boutonaccueil.clicked.connect(self.accueil)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap('Capture d’écran 2022-04-14 153417.png'))
+        self.boutonaccueil.setIcon(icon)
+        self.return_bouton.clicked.connect(self.accueil)
+
+
+    def accueil(self):
+        widget.setCurrentIndex(0)
+
 class PopUpListeEmpruntsWidget(QWidget, QSqlDatabase):
     def __init__(self):
         global Lfinal
@@ -321,4 +335,3 @@ if __name__ == "__main__":
         sys.exit(app.exec_())
     except :
         print("Exiting")
-.
