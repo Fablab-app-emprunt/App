@@ -19,11 +19,12 @@ state = ''
 requete_Outils = ''
 Requete_Outils = ['ELEC','BOIS','USINAGE']
 page_choix_outils = ['page_choix_outils_elec','page_choix_outils_bois','page_choix_outils_usinage']
-pop_up = ['pop_up_elec','pop_up_bois','pop_up_usinage']
+# pop_up = ['pop_up_elec','pop_up_bois','pop_up_usinage']
 Data = []
 Lelec = []
 Lbois = []
 Lusinage = []
+Lfinal=[]
 
 class PageAccueil(QWidget):
     def __init__(self):
@@ -58,11 +59,11 @@ class PageAccueil(QWidget):
             requete_Outils = Requete_Outils[i]
             print(requete_Outils)
             page_choix_outils[i] = EmpruntAjout()
-            widget.insertWidget(2*i+2,page_choix_outils[i])
+            widget.insertWidget(i+2,page_choix_outils[i])
             print("Index of : ", requete_Outils,' is ', widget.indexOf(page_choix_outils[i]))
-            pop_up[i] = PopUpListeEmpruntsWidget()
-            widget.insertWidget(2*i+3,pop_up[i])
-            print("Index of : pop up ", requete_Outils,' is ', widget.indexOf(pop_up[i]))
+            # pop_up[i] = PopUpListeEmpruntsWidget()
+            # widget.insertWidget(2*i+3,pop_up[i])
+            # print("Index of : pop up ", requete_Outils,' is ', widget.indexOf(pop_up[i]))
 
 
 class EmpruntTypeOutils(QWidget):
@@ -87,12 +88,12 @@ class EmpruntTypeOutils(QWidget):
         requete_Outils = 'ELEC'
 
     def bois(self):
-        widget.setCurrentIndex(4)
+        widget.setCurrentIndex(3)
         global requete_Outils
         requete_Outils = 'BOIS'
 
     def usinage(self):
-        widget.setCurrentIndex(6)
+        widget.setCurrentIndex(4)
         global requete_Outils
         requete_Outils = 'USINAGE'
 
@@ -100,14 +101,21 @@ class EmpruntTypeOutils(QWidget):
         global Lelec
         global Lbois
         global Lusinage
-        Lfinal=[]
+        global Lfinal
         for i in range(len(Lelec)):
-            Lfinal.append(Lelec[i])
+            if Lelec[i] not in Lfinal :
+                Lfinal.append(Lelec[i])
         for i in range(len(Lbois)):
-            Lfinal.append(Lbois[i])
+            if Lbois[i] not in Lfinal :
+                Lfinal.append(Lbois[i])
         for i in range(len(Lusinage)):
-            Lfinal.append(Lusinage[i])
-        print(Lfinal)
+            if Lusinage[i] not in Lfinal :
+                Lfinal.append(Lusinage[i])
+        print("Lfinal",Lfinal)
+        pop_up = PopUpListeEmpruntsWidget()
+        widget.insertWidget(5,pop_up)
+        print("Index of : pop up is ", widget.indexOf(pop_up))
+        widget.setCurrentIndex(5)
 
 class EmpruntAjout(QWidget, QSqlDatabase):
     def __init__(self):
@@ -121,7 +129,7 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         self.today.clicked.connect(self.date)
         self.boutonvalider.clicked.connect(self.recupdata)
         self.dateemprunt.clicked.connect(self.date)
-        self.boutonvalider.clicked.connect(self.goToPopUpListeEmprunts)
+        self.boutonvalider.clicked.connect(self.goToChoixTypeOutils)
         self.rendreOutils_6.clicked.connect(self.returntypeoutils)
 
         global state
@@ -233,9 +241,9 @@ class EmpruntAjout(QWidget, QSqlDatabase):
                     Lbois.append(L[0])
                 elif requete_Outils == 'USINAGE':
                     Lusinage.append(L[0])
-        print(Lelec)
-        print(Lbois)
-        print(Lusinage)
+        print('Lelec',Lelec)
+        print('Lbois',Lbois)
+        print('Lusinage',Lusinage)
 
     def accueil(self):
        widget.setCurrentIndex(0)
@@ -252,11 +260,8 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         date_in_string = str(value.toPyDate())
         print(date_in_string)
 
-    def goToPopUpListeEmprunts(self):
-        widget.setCurrentIndex(widget.currentIndex()+1)
-        print("Index PopUpListeEmprunts : ",widget.currentIndex())
-
-
+    def goToChoixTypeOutils(self):
+        widget.setCurrentIndex(1)
 
 class PopUpListeEmpruntsWidget(QWidget, QSqlDatabase):
     def __init__(self):
@@ -275,30 +280,23 @@ class PopUpListeEmpruntsWidget(QWidget, QSqlDatabase):
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
-        print("Lelec",Lelec)
 
-
+        global Lfinal
 #------------------------------------REMPLIR LES TABLEAUX------------------------------------------------------------
-        for item in Lelec:
+        for item in Lfinal:
             print("wesh")
             print(item[0])
-            cell = QTableWidgetItem(str(item[0]))
+            cell = QTableWidgetItem(str(item))
             self.table_Recap.setItem(row, col, cell)
 
-            cell = QTableWidgetItem(str(item[1]))
-            self.table_Recap.setItem(row, col+1, cell)
-
-
-
+            # cell = QTableWidgetItem(str(item[1]))
+            # self.table_Recap.setItem(row, col+1, cell)
 
     def reponseConfirmer(self):
-
-        # self.pageAccueil.show()
-        # self.close()
-        widget.setCurrentIndex(1)
+        widget.setCurrentIndex(0)
 
     def reponseCroix(self):
-        widget.setCurrentIndex(widget.currentIndex()-1)
+        widget.setCurrentIndex(1)
 
 
 
