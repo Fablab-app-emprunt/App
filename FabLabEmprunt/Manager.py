@@ -139,7 +139,7 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         global Data
         self.table_Emprunt.setColumnCount(4)
         self.table_Emprunt.rowCount()
-        self.table_Emprunt.setHorizontalHeaderLabels(['id','Name','Quantity',state])
+        self.table_Emprunt.setHorizontalHeaderLabels(['id',"Nom de l'outils",'Quantité',state])
         row = self.table_Emprunt.rowCount()
         self.table_Emprunt.setRowCount(row+1)
         col = 0
@@ -274,7 +274,7 @@ class PopUpListeEmpruntsWidget(QWidget, QSqlDatabase):
         self.boutonconfirmer.clicked.connect(self.reponseConfirmer)
         self.table_Recap.setColumnCount(3)
         self.table_Recap.rowCount()
-        self.table_Recap.setHorizontalHeaderLabels(['id','Name','Quantity'])
+        self.table_Recap.setHorizontalHeaderLabels(['id',"Nom de l'outils",'Quantité'])
         row = self.table_Recap.rowCount()
         self.table_Recap.setRowCount(len(Lfinal))
         col = 0
