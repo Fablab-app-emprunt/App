@@ -1,3 +1,5 @@
+import os
+os.system('pip install -r requirements.txt')
 import sys
 from PyQt5 import QtGui, QtCore
 from PyQt5 import QtWidgets, QtSql
