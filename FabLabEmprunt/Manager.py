@@ -265,29 +265,29 @@ class EmpruntAjout(QWidget, QSqlDatabase):
 
 class PopUpListeEmpruntsWidget(QWidget, QSqlDatabase):
     def __init__(self):
+        global Lfinal
         super(PopUpListeEmpruntsWidget, self).__init__()
         loadUi('popUpListeEmprunts.ui', self)
         self.boutoncroix.clicked.connect(self.reponseCroix)
         self.boutonconfirmer.clicked.connect(self.reponseConfirmer)
-        self.table_Recap.setColumnCount(4)
+        self.table_Recap.setColumnCount(3)
         self.table_Recap.rowCount()
-        self.table_Recap.setHorizontalHeaderLabels(['id','Name','Quantity',state])
+        self.table_Recap.setHorizontalHeaderLabels(['id','Name','Quantity'])
         row = self.table_Recap.rowCount()
-        self.table_Recap.setRowCount(row+1)
+        self.table_Recap.setRowCount(len(Lfinal))
         col = 0
         header = self.table_Recap.horizontalHeader()
         header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
         header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
-        header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
 
-        global Lfinal
 #------------------------------------REMPLIR LES TABLEAUX------------------------------------------------------------
         for item in Lfinal:
-            print("wesh")
-            print(item[0])
+            print("row",row)
+            print("item", item)
             cell = QTableWidgetItem(str(item))
             self.table_Recap.setItem(row, col, cell)
+            row+=1
 
             # cell = QTableWidgetItem(str(item[1]))
             # self.table_Recap.setItem(row, col+1, cell)
