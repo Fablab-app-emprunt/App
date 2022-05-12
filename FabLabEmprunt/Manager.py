@@ -128,11 +128,10 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap('Capture d’écran 2022-04-14 153417.png'))
         self.boutonaccueil.setIcon(icon)
-        self.today.clicked.connect(self.date)
         self.boutonvalider.clicked.connect(self.recupdata)
         self.dateemprunt.clicked.connect(self.date)
         self.boutonvalider.clicked.connect(self.goToChoixTypeOutils)
-        self.rendreOutils_6.clicked.connect(self.returntypeoutils)
+        self.return_bouton.clicked.connect(self.returntypeoutils)
 
         global state
         global requete_Outils
@@ -258,7 +257,7 @@ class EmpruntAjout(QWidget, QSqlDatabase):
             widget.setCurrentIndex(1)
 
     def date(self):
-        value = self.today.selectedDate()
+        value = self.dateemprunt.selectedDate()
         date_in_string = str(value.toPyDate())
         print(date_in_string)
 

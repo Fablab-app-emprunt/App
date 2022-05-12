@@ -495,7 +495,7 @@ border-bort</string>
     <number>0</number>
    </property>
   </widget>
-  <widget class="QPushButton" name="rendreOutils_6">
+  <widget class="QPushButton" name="return_bouton">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -724,24 +724,59 @@ border-bort</string>
     <string>Retour</string>
    </property>
   </widget>
-  <widget class="QCalendarWidget" name="today">
+  <widget class="QCalendarWidget" name="dateemprunt">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>410</y>
-     <width>351</width>
-     <height>191</height>
+     <x>315</x>
+     <y>440</y>
+     <width>341</width>
+     <height>201</height>
     </rect>
    </property>
+   <property name="focusPolicy">
+    <enum>Qt::StrongFocus</enum>
+   </property>
+   <property name="autoFillBackground">
+    <bool>true</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
   </widget>
-  <widget class="QCalendarWidget" name="dateemprunt">
+  <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>571</x>
-     <y>410</y>
-     <width>351</width>
-     <height>191</height>
+     <x>400</x>
+     <y>390</y>
+     <width>201</width>
+     <height>41</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-color: rgb(255, 170, 0);
+border:3px solid orange;
+
+border-color:orange;
+
+background-color:white;
+color: rgb(255, 170, 0);
+border-bort</string>
+   </property>
+   <property name="text">
+    <string>Date de retour</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
  </widget>
