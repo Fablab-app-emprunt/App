@@ -6,9 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>540</width>
-    <height>450</height>
+    <width>1000</width>
+    <height>700</height>
    </rect>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>25</pointsize>
+   </font>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -16,8 +21,8 @@
   <widget class="QPushButton" name="boutonconfirmer">
    <property name="geometry">
     <rect>
-     <x>164</x>
-     <y>370</y>
+     <x>390</x>
+     <y>570</y>
      <width>211</width>
      <height>51</height>
     </rect>
@@ -242,20 +247,10 @@ border-bort</string>
     <string>Confirmer</string>
    </property>
   </widget>
-  <widget class="QTableView" name="tableView">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>80</y>
-     <width>461</width>
-     <height>251</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QPushButton" name="boutoncroix">
    <property name="geometry">
     <rect>
-     <x>440</x>
+     <x>900</x>
      <y>10</y>
      <width>91</width>
      <height>41</height>
@@ -479,6 +474,51 @@ border-bort</string>
    </property>
    <property name="text">
     <string>X</string>
+   </property>
+  </widget>
+  <widget class="QTextBrowser" name="textBrowser">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>10</y>
+     <width>450</width>
+     <height>100</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>25</pointsize>
+    </font>
+   </property>
+   <property name="tabletTracking">
+    <bool>true</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-color: rgb(255, 170, 0);
+border:3px solid orange;
+
+border-color:orange;
+border-radius: 15px ;
+background-color:white;
+color: rgb(255, 170, 0);
+border-bort</string>
+   </property>
+   <property name="html">
+    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:26pt;&quot;&gt;Voulez-vous emprunter ces outils ?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QTableWidget" name="table_Recap">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>140</y>
+     <width>840</width>
+     <height>410</height>
+    </rect>
    </property>
   </widget>
  </widget>

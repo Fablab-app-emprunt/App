@@ -264,7 +264,31 @@ class PopUpListeEmpruntsWidget(QWidget, QSqlDatabase):
         loadUi('popUpListeEmprunts.ui', self)
         self.boutoncroix.clicked.connect(self.reponseCroix)
         self.boutonconfirmer.clicked.connect(self.reponseConfirmer)
-        # self.pageAccueil = PageAccueil()
+        self.table_Recap.setColumnCount(4)
+        self.table_Recap.rowCount()
+        self.table_Recap.setHorizontalHeaderLabels(['id','Name','Quantity',state])
+        row = self.table_Recap.rowCount()
+        self.table_Recap.setRowCount(row+1)
+        col = 0
+        header = self.table_Recap.horizontalHeader()
+        header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
+        header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
+        print("Lelec",Lelec)
+
+
+#------------------------------------REMPLIR LES TABLEAUX------------------------------------------------------------
+        for item in Lelec:
+            print("wesh")
+            print(item[0])
+            cell = QTableWidgetItem(str(item[0]))
+            self.table_Recap.setItem(row, col, cell)
+
+            cell = QTableWidgetItem(str(item[1]))
+            self.table_Recap.setItem(row, col+1, cell)
+
+
 
 
     def reponseConfirmer(self):
@@ -276,8 +300,8 @@ class PopUpListeEmpruntsWidget(QWidget, QSqlDatabase):
     def reponseCroix(self):
         widget.setCurrentIndex(widget.currentIndex()-1)
 
-    # def validate(self):
-    #     pass
+
+
 
 if __name__ == "__main__":
 
