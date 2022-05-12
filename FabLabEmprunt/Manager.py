@@ -256,10 +256,10 @@ class RendreOutils(QWidget, QSqlDatabase):
             for i in range(item[5] + 1):
                 L.append(str(i))
                 i+=1
-            combo = QComboBox()
+            self.combo = QComboBox()
             for i in L:
-                combo.addItem(i)
-            self.table_Emprunt.setCellWidget(row, col+2, combo)
+                self.combo.addItem(i)
+            self.table_Emprunt.setCellWidget(row, col+2, self.combo)
 
             chkBoxItem = QTableWidgetItem()
             chkBoxItem.setFlags(QtCore.Qt.ItemIsUserCheckable | QtCore.Qt.ItemIsEnabled)
