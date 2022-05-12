@@ -17,7 +17,6 @@ from PyQt5.QtSql import QSql, QSqlQuery, QSqlDatabase
 import mysql.connector
 
 
-state = ''
 requete_Outils = ''
 Requete_Outils = ['ELEC','BOIS','USINAGE']
 page_choix_outils = ['page_choix_outils_elec','page_choix_outils_bois','page_choix_outils_usinage']
@@ -36,8 +35,6 @@ class PageAccueil(QWidget):
         self.emprunteroutils.clicked.connect(self.goToEmprunterOutils)
 
     def goToRendreOutils(self):
-        global state
-        state = 'Rendre'
         print("Index rendreoutils : ",widget.indexOf(page_choix_type_outils))
         page_rendre_outils = RendreOutils()
         widget.insertWidget(2,page_rendre_outils)
@@ -45,8 +42,6 @@ class PageAccueil(QWidget):
 
     def goToEmprunterOutils(self):
         widget.setCurrentIndex(1)
-        global state
-        state = 'Emprunter'
         print("Index emprunteroutils : ",widget.indexOf(page_choix_type_outils))
         self.creationPages()
 
@@ -133,12 +128,11 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         self.boutonvalider.clicked.connect(self.goToChoixTypeOutils)
         self.return_bouton.clicked.connect(self.returntypeoutils)
 
-        global state
         global requete_Outils
         global Data
         self.table_Emprunt.setColumnCount(4)
         self.table_Emprunt.rowCount()
-        self.table_Emprunt.setHorizontalHeaderLabels(['id',"Nom de l'outils",'Quantité',state])
+        self.table_Emprunt.setHorizontalHeaderLabels(['id',"Nom de l'outils",'Quantité','Emprunter'])
         row = self.table_Emprunt.rowCount()
         self.table_Emprunt.setRowCount(row+1)
         col = 0
@@ -146,78 +140,43 @@ class EmpruntAjout(QWidget, QSqlDatabase):
                                              host='145.14.151.101',
                                              database='u556968436_fablab')
 
-        if state == 'Emprunter':
-            count_tools = "select * from Outils where departOutils_Outils = '"+requete_Outils+"'"
 
-            cursor = connection.cursor()
-            cursor.execute(count_tools)
-            Data = cursor.fetchall()
+        count_tools = "select * from Outils where departOutils_Outils = '"+requete_Outils+"'"
+
+        cursor = connection.cursor()
+        cursor.execute(count_tools)
+        Data = cursor.fetchall()
 
 #-------------REMPLIR LES TABLEAUX---------------------
-            for item in Data:
-                cell = QTableWidgetItem(str(item[0]))
-                self.table_Emprunt.setItem(row, col, cell)
+        for item in Data:
+            cell = QTableWidgetItem(str(item[0]))
+            self.table_Emprunt.setItem(row, col, cell)
 
-                cell = QTableWidgetItem(str(item[1]))
-                self.table_Emprunt.setItem(row, col+1, cell)
+            cell = QTableWidgetItem(str(item[1]))
+            self.table_Emprunt.setItem(row, col+1, cell)
 #-----------3EME COLONNE : FAIRE UNE LISTE DEROULANTE POUR CHOISIR LA QUANTITE DE CHAQUUE OUTIL A EMPRUNTER---------------
-                L = []
-                for i in range(item[3] - item[5] + 1):
-                    L.append(str(i))
-                    i+=1
-                combo = QComboBox()
-                for i in L:
-                    combo.addItem(i)
-                self.table_Emprunt.setCellWidget(row, col+2, combo)
+            L = []
+            for i in range(item[3] - item[5] + 1):
+                L.append(str(i))
+                i+=1
+            combo = QComboBox()
+            for i in L:
+                combo.addItem(i)
+            self.table_Emprunt.setCellWidget(row, col+2, combo)
 
-                chkBoxItem = QTableWidgetItem()
-                chkBoxItem.setFlags(QtCore.Qt.ItemIsUserCheckable | QtCore.Qt.ItemIsEnabled)
-                chkBoxItem.setCheckState(QtCore.Qt.Unchecked)
-                self.table_Emprunt.setItem(row,col+3,chkBoxItem)
-                row += 1
-                self.table_Emprunt.setRowCount(row+1)
+            chkBoxItem = QTableWidgetItem()
+            chkBoxItem.setFlags(QtCore.Qt.ItemIsUserCheckable | QtCore.Qt.ItemIsEnabled)
+            chkBoxItem.setCheckState(QtCore.Qt.Unchecked)
+            self.table_Emprunt.setItem(row,col+3,chkBoxItem)
+            row += 1
+            self.table_Emprunt.setRowCount(row+1)
 
-                header = self.table_Emprunt.horizontalHeader()
-                header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
-                header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
-                header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
-                header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
-
-        elif state == 'Rendre':
-            count_tools = "select * from Outils where quantiteEmprunte_Outils != 0"
-            cursor = connection.cursor()
-            cursor.execute(count_tools)
-            Data = cursor.fetchall()
-
-#-------------REMPLIR LES TABLEAUX---------------------
-            for item in Data:
-                cell = QTableWidgetItem(str(item[0]))
-                self.table_Emprunt.setItem(row, col, cell)
-
-                cell = QTableWidgetItem(str(item[1]))
-                self.table_Emprunt.setItem(row, col+1, cell)
-#-----------3EME COLONNE : FAIRE UNE LISTE DEROULANTE POUR CHOISIR LA QUANTITE DE CHAQUUE OUTIL A RENDRE---------------
-                L = []
-                for i in range(item[5] + 1):
-                    L.append(str(i))
-                    i+=1
-                combo = QComboBox()
-                for i in L:
-                    combo.addItem(i)
-                self.table_Emprunt.setCellWidget(row, col+2, combo)
-
-                chkBoxItem = QTableWidgetItem()
-                chkBoxItem.setFlags(QtCore.Qt.ItemIsUserCheckable | QtCore.Qt.ItemIsEnabled)
-                chkBoxItem.setCheckState(QtCore.Qt.Unchecked)
-                self.table_Emprunt.setItem(row,col+3,chkBoxItem)
-                row += 1
-                self.table_Emprunt.setRowCount(row+1)
-
-                header = self.table_Emprunt.horizontalHeader()
-                header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
-                header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
-                header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
-                header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
+            header = self.table_Emprunt.horizontalHeader()
+            header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
+            header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
+            header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
+            header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
+        connection.close()
 
     def recupdata(self):
         global requete_Outils
@@ -250,11 +209,7 @@ class EmpruntAjout(QWidget, QSqlDatabase):
        widget.setCurrentIndex(0)
 
     def returntypeoutils(self):
-        global state
-        if state == 'Emprunter':
-            widget.setCurrentIndex(1)
-        elif state == 'Rendre' :
-            widget.setCurrentIndex(1)
+        widget.setCurrentIndex(1)
 
     def date(self):
         value = self.dateemprunt.selectedDate()
