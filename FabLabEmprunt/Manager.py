@@ -289,7 +289,7 @@ class RendreOutils(QWidget, QSqlDatabase):
     def Selectall(self):
         for row in range(self.table_Emprunt.rowCount()-1):
             self.table_Emprunt.item(row,3).setCheckState(QtCore.Qt.Checked)
-            # self.table_Emprunt.cellWidget(row,2).currentText() =
+            self.table_Emprunt.cellWidget(row,2).setCurrentIndex(self.table_Emprunt.cellWidget(row,2).count()-1)
 
 class PopUpListeEmpruntsWidget(QWidget, QSqlDatabase):
     def __init__(self):
