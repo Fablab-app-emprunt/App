@@ -130,7 +130,7 @@ class EmpruntAjout(QWidget, QSqlDatabase):
                                              database='u556968436_fablab')
 
 
-        count_tools = "select * from Outils where departOutils_Outils = '"+requete_Outils+"'"
+        count_tools = "select * from Outils where departOutils_Outils = '"+requete_Outils+"' and `quantiteEmprunte_Outils`!= quantiteOutils_Outils"
 
         cursor = connection.cursor()
         cursor.execute(count_tools)
@@ -223,7 +223,7 @@ class RendreOutils(QWidget, QSqlDatabase):
         icon.addPixmap(QtGui.QPixmap('Capture d’écran 2022-04-14 153417.png'))
         self.boutonaccueil.setIcon(icon)
         self.return_bouton.clicked.connect(self.accueil)
-        self.boutonvalider.clicked.connect(self.recupdata)
+        self.boutonvalider.clicked.connect(self.rendre)
         self.return_bouton_2.clicked.connect(self.Selectall)
         self.table_Emprunt.setColumnCount(4)
         self.table_Emprunt.rowCount()
@@ -274,7 +274,7 @@ class RendreOutils(QWidget, QSqlDatabase):
     def accueil(self):
         widget.setCurrentIndex(0)
 
-    def recupdata(self):
+    def rendre(self):
         Lrendre=[]
         for row in range(self.table_Emprunt.rowCount()-1):
             L=[]
@@ -284,7 +284,18 @@ class RendreOutils(QWidget, QSqlDatabase):
                     L.append(self.table_Emprunt.cellWidget(row,2).currentText())
                     Lrendre.append(L[0])
                     Lrendre.append(L[1])
-        print('Lrendre',Lrendre)
+        print(Lrendre)
+        for i in range(0,len(Lrendre),2):
+            connection = mysql.connector.connect(user='u556968436_LaTeamDeLoick', password='LoickRaison2022',
+                                                 host='145.14.151.101',
+                                                 database='u556968436_fablab')
+            req = "UPDATE `Outils` SET `quantiteEmprunte_Outils`=`quantiteEmprunte_Outils` - %s WHERE `nomOutils_Outils`= %s "
+            tuple=(Lrendre[i+1], Lrendre[i])
+            cursor = connection.cursor()
+            cursor.execute(req,tuple)
+            connection.commit()
+            connection.close()
+        widget.setCurrentWidget(page_accueil)
 
     def Selectall(self):
         for row in range(self.table_Emprunt.rowCount()-1):
@@ -321,19 +332,19 @@ class PopUpListeEmpruntsWidget(QWidget, QSqlDatabase):
 
     def reponseConfirmer(self):
         global Lfinal
-
         print("longueur liste",len(Lfinal))
-        for i in range(1,len(Lfinal)+1,2):
+        for i in range(0,len(Lfinal),2):
             connection = mysql.connector.connect(user='u556968436_LaTeamDeLoick', password='LoickRaison2022',
                                                  host='145.14.151.101',
                                                  database='u556968436_fablab')
             print("quantite :",Lfinal[i],"nom outil :",Lfinal[i-1])
-            # req = "UPDATE Outils SET quantiteEmprunte_Outils ="+Lfinal[i]+" WHERE nomOutils_Outils ='"+Lfinal[i-1]+"'"
-            req = "UPDATE Outils SET quantiteEmprunte_Outils = 1 WHERE nomOutils_Outils = 'LOUPE BLANCHE RETRO ECLAIRE'"
-            print("requete fonctionnelle : ",req)
+            req = "UPDATE `Outils` SET `quantiteEmprunte_Outils`=`quantiteEmprunte_Outils` + %s WHERE `nomOutils_Outils`= %s "
+            tuple=(Lfinal[i+1], Lfinal[i])
             cursor = connection.cursor()
-            cursor.execute(req)
+            cursor.execute(req,tuple)
+            connection.commit()
             connection.close()
+        print("lol")
         widget.setCurrentWidget(page_accueil)
 
     def reponseCroix(self):
