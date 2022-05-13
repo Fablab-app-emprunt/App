@@ -234,6 +234,8 @@ class RendreOutils(QWidget, QSqlDatabase):
         icon.addPixmap(QtGui.QPixmap('Capture d’écran 2022-04-14 153417.png'))
         self.boutonaccueil.setIcon(icon)
         self.return_bouton.clicked.connect(self.accueil)
+        self.boutonvalider.clicked.connect(self.recupdata)
+        self.return_bouton_2.clicked.connect(self.Selectall)
         self.table_Emprunt.setColumnCount(4)
         self.table_Emprunt.rowCount()
         self.table_Emprunt.setHorizontalHeaderLabels(['id',"Nom de l'outils",'Quantité','Rendre'])
@@ -282,6 +284,23 @@ class RendreOutils(QWidget, QSqlDatabase):
 
     def accueil(self):
         widget.setCurrentIndex(0)
+
+    def recupdata(self):
+        Lrendre=[]
+        for row in range(self.table_Emprunt.rowCount()-1):
+            L=[]
+            if self.table_Emprunt.item(row,3).checkState() == QtCore.Qt.CheckState.Checked:
+                for col in range(self.table_Emprunt.columnCount()-3):
+                    L.append(self.table_Emprunt.item(row,1).text())
+                    L.append(self.table_Emprunt.cellWidget(row,2).currentText())
+                    Lrendre.append(L[0])
+                    Lrendre.append(L[1])
+        print('Lrendre',Lrendre)
+
+    def Selectall(self):
+        for row in range(self.table_Emprunt.rowCount()-1):
+            self.table_Emprunt.item(row,3).setCheckState(QtCore.Qt.Checked)
+            # self.table_Emprunt.cellWidget(row,2).currentText() =
 
 class PopUpListeEmpruntsWidget(QWidget, QSqlDatabase):
     def __init__(self):
