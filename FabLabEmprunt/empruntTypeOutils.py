@@ -18,8 +18,8 @@ class EmpruntTypeOutils(QWidget):
         self.rendreOutils_4.clicked.connect(self.validate)
 
     def accueil(self):
-        from main import widget
-        widget.setCurrentIndex(0)
+        from main import widget,page_accueil
+        widget.setCurrentWidget(page_accueil)
 
     def elec(self):
         from main import widget, requete_Outils

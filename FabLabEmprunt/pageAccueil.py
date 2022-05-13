@@ -14,14 +14,14 @@ class PageAccueil(QWidget):
         print("Index rendreoutils : ", widget.indexOf(page_choix_type_outils))
         page_rendre_outils = RendreOutils()
         widget.addWidget(page_rendre_outils)
-        widget.setCurrentIndex(2)
+        widget.setCurrentWidget(page_rendre_outils)
 
     def goToEmprunterOutils(self):
-        from main import widget, page_choix_type_outils
-        widget.setCurrentIndex(1)
+        print("test")
+        from FabLabEmprunt.main import page_choix_type_outils,widget
         widget.setCurrentWidget(page_choix_type_outils)
-        print("Index emprunteroutils : ", widget.indexOf(page_choix_type_outils))
-        self.creationPages()
+        # print("Index emprunteroutils : ", widget.indexOf(page_choix_type_outils))
+        # self.creationPages()
 
     def creationPages(self):
         from empruntajout import EmpruntAjout
@@ -33,7 +33,7 @@ class PageAccueil(QWidget):
             print(requete_Outils)
             page_choix_outils[i] = EmpruntAjout()
             widget.insertWidget(i + 2, page_choix_outils[i])
-            print("Index of : ", requete_Outils, ' is ', widget.indexOf(page_choix_outils[i]))
+            # print("Index of : ", requete_Outils, ' is ', widget.indexOf(page_choix_outils[i]))
 
 # if __name__ == "__main__":
 #
