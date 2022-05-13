@@ -1,55 +1,41 @@
-import sys
-from PyQt5 import QtGui
-from PyQt5 import QtWidgets, QtSql
-from PyQt5.uic import loadUi
-from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QWidget, QMessageBox
-from PyQt5.QtSql import QSql, QSqlQuery, QSqlDatabase
-import mysql.connector
+# import os
+# os.system('pip install -r requirements.txt')
 
-global requete_Outils
-global widget
 
-# class MainApp(QWidget):
-#     def __init__(self):
-#         super(MainApp, self).__init__()
-#         self.Stack = QtWidgets.QStackedWidget()
-#         widget = QtWidgets.QStackedWidget()
-#
-#         self.page_accueil = PageAccueil()
-#         self.page_choix_type_outils = EmpruntTypeOutils()
-#         self.page_choix_outils = EmpruntAjout()
-#
-#         self.widget.addWidget(self.page_accueil)
-#         self.widget.addWidget(self.page_choix_type_outils)
-#         self.widget.addWidget(self.page_choix_outils)
-#
-#         widget.setFixedHeight(700)
-#         widget.setFixedWidth(1000)
-#         widget.show()
-# if __name__ == "__main__":
+if __name__ == "__main__":
+    import sys
+    from PyQt5 import QtWidgets
+    from PyQt5.QtWidgets import QApplication
 
-app = QApplication(sys.argv)
-# IHM = MainApp()
+    requete_Outils = ''
+    Requete_Outils = ['ELEC', 'BOIS', 'USINAGE']
+    page_choix_outils = ['page_choix_outils_elec', 'page_choix_outils_bois', 'page_choix_outils_usinage']
+    Data = []
+    Lelec = []
+    Lbois = []
+    Lusinage = []
+    Lfinal = []
 
-from FabLabEmprunt.pageAccueil import PageAccueil
-from FabLabEmprunt.empruntTypeOutils import EmpruntTypeOutils
-from FabLabEmprunt.empruntajout import EmpruntAjout
+    app = QApplication(sys.argv)
 
-widget = QtWidgets.QStackedWidget()
+    from FabLabEmprunt.pageAccueil import PageAccueil
+    from FabLabEmprunt.empruntTypeOutils import EmpruntTypeOutils
 
-page_accueil = PageAccueil()
-page_choix_type_outils = EmpruntTypeOutils()
-page_choix_outils = EmpruntAjout()
+    widget = QtWidgets.QStackedWidget()
 
-widget.addWidget(page_accueil)
-widget.addWidget(page_choix_type_outils)
-widget.addWidget(page_choix_outils)
+    page_accueil = PageAccueil()
+    page_choix_type_outils = EmpruntTypeOutils()
 
-widget.setFixedHeight(700)
-widget.setFixedWidth(1000)
-widget.show()
+    widget.addWidget(page_accueil)
+    widget.addWidget(page_choix_type_outils)
 
-try:
-    sys.exit(app.exec_())
-except :
-    print("Exiting")
+    widget.setFixedHeight(700)
+    widget.setFixedWidth(1000)
+    widget.show()
+
+    print("Index Accueil : ", widget.indexOf(page_accueil))
+
+    try:
+        sys.exit(app.exec_())
+    except:
+        print("Exiting")

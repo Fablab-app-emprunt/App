@@ -1,14 +1,11 @@
-import sys
-from PyQt5 import QtWidgets
-from PyQt5 import QtGui
-from PyQt5.uic import loadUi
-from PyQt5.QtWidgets import QDialog, QApplication, QLabel, QWidget, QMessageBox
+from PyQt5.QtWidgets import QWidget #,QApplication
 
-# from FabLabEmprunt.empruntajout import EmpruntAjout
-# from FabLabEmprunt.pageAccueil import PageAccueil
 
 class EmpruntTypeOutils(QWidget):
+
     def __init__(self):
+        from PyQt5 import QtGui
+        from PyQt5.uic import loadUi
         super(EmpruntTypeOutils, self).__init__()
         loadUi('empruntTypeOutils.ui', self)
         icon = QtGui.QIcon()
@@ -18,90 +15,59 @@ class EmpruntTypeOutils(QWidget):
         self.bouton_bois.clicked.connect(self.bois)
         self.bouton_usinage.clicked.connect(self.usinage)
         self.boutonaccueil.clicked.connect(self.accueil)
+        self.rendreOutils_4.clicked.connect(self.validate)
 
     def accueil(self):
+        from main import widget
         widget.setCurrentIndex(0)
 
-    def conn_BDD(self, requete_Outils):
-        #---------BDD----------------
-
-        #-----------Déclaration de la connexion---------
-        connection = mysql.connector.connect(user='u556968436_LaTeamDeLoick', password='LoickRaison2022',
-                                             host='145.14.151.101',
-                                             database='u556968436_fablab')
-        # sql_select_Query = "select * from Personnes"
-        # cursor = connection.cursor()
-        # cursor.execute(sql_select_Query)
-        # # get all records
-        # records = cursor.fetchall()
-        # print("Total number of rows in table: ", cursor.rowcount)
-        #
-        # print("\nPrinting each row")
-        # for row in records:
-        #     print("Id = ", row[1], )
-        #
-        # connection.close()
-        count_tools = "select count(*) from Outils where departOutils_Outils = '" + requete_Outils + "'"
-        cursor = connection.cursor()
-        cursor.execute(count_tools)
-        outils = cursor.fetchall()
-        for row in outils:
-            print("Id = ", row[0], )
-            self.tableWidget.setRowCount(row[0])
-
-        connection.close()
-        #----------Requêtes de modification------------
-
-        # query = QSqlQuery("insert into Utilisateur (login) values ('david')")
-
-        #                OU
-
-        #         # query = QSqlQuery()
-        #         # query.exec_("insert into Utilisateur (login) values ('david')")
-        #
-        #     #----------Requêtes préparées------------ (utile lorsqu'on utilise des variables)
-        #
-        #         # query = QSqlQuery()
-        #         # query.prepare("insert into Utilisateur (login) values (:nom)")
-        # query.bindValue(":nom", "david")
-        # query.exec_()
-
-        #-----------Gestion des erreurs---------------
-
-        # db.open("login", "motdepasse")
-        # if db.isOpenError():
-        #     error = db.lastError()
-
+    def elec(self):
+        from main import widget, requete_Outils
+        print(requete_Outils)
+        requete_Outils = 'ELEC'
+        widget.setCurrentIndex(2)
 
     def bois(self):
-        widget.setCurrentIndex(2)
+        from main import widget
+        widget.setCurrentIndex(3)
+        global requete_Outils
         requete_Outils = 'BOIS'
-        self.conn_BDD(requete_Outils)
-
-    def elec(self):
-        widget.setCurrentIndex(2)
-        requete_Outils = 'ELEC'
-        self.conn_BDD(requete_Outils)
 
     def usinage(self):
-        widget.setCurrentIndex(2)
+        from main import widget
+        widget.setCurrentIndex(4)
+        global requete_Outils
         requete_Outils = 'USINAGE'
-        self.conn_BDD(requete_Outils)
+
+    def validate(self):
+        from popUpListeEmprunts import PopUpListeEmpruntsWidget
+        from main import widget, Lelec, Lbois, Lusinage
+        Lfinal = []
+        for i in range(len(Lelec)):
+            Lfinal.append(Lelec[i])
+        for i in range(len(Lbois)):
+            Lfinal.append(Lbois[i])
+        for i in range(len(Lusinage)):
+            Lfinal.append(Lusinage[i])
+        print("Lfinal", Lfinal)
+        pop_up = PopUpListeEmpruntsWidget()
+        widget.insertWidget(5, pop_up)
+        print("Index of : pop up is ", widget.indexOf(pop_up))
+        widget.setCurrentIndex(5)
 
 
-if __name__== "__main__":
-    app = QApplication(sys.argv)
-    widget = QtWidgets.QStackedWidget()
-
-    emprunt_type_outils = EmpruntTypeOutils()
-
-    widget.addWidget(emprunt_type_outils)
-    widget.setFixedHeight(700)
-    widget.setFixedWidth(1000)
-    widget.show()
-
-    try:
-        sys.exit(app.exec_())
-    except :
-        print("Exiting")
-
+# if __name__ == "__main__":
+#     app = QApplication(sys.argv)
+#     widget = QtWidgets.QStackedWidget()
+#
+#     emprunt_type_outils = EmpruntTypeOutils()
+#
+#     widget.addWidget(emprunt_type_outils)
+#     widget.setFixedHeight(700)
+#     widget.setFixedWidth(1000)
+#     widget.show()
+#
+#     try:
+#         sys.exit(app.exec_())
+#     except:
+#         print("Exiting")

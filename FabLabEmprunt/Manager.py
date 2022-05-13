@@ -2,25 +2,16 @@
 # os.system('pip install -r requirements.txt')
 import sys
 from PyQt5 import QtGui, QtCore
-from PyQt5 import QtWidgets, QtSql
+from PyQt5 import QtWidgets
 from PyQt5.uic import loadUi
-
-from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QWidget, QMessageBox, QTableWidgetItem, QCheckBox, QVBoxLayout
-from PyQt5.QtWidgets import *
-from PyQt5.uic import *
-
-from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QWidget, QMessageBox, QPushButton, QTableWidget, QTableWidgetItem, QCheckBox, QVBoxLayout
-
-from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QWidget, QMessageBox, QTableWidgetItem, QComboBox
-
-from PyQt5.QtSql import QSql, QSqlQuery, QSqlDatabase
+from PyQt5.QtWidgets import QApplication, QWidget, QTableWidgetItem, QComboBox
+from PyQt5.QtSql import QSqlDatabase
 import mysql.connector
 
 
 requete_Outils = ''
 Requete_Outils = ['ELEC','BOIS','USINAGE']
 page_choix_outils = ['page_choix_outils_elec','page_choix_outils_bois','page_choix_outils_usinage']
-# pop_up = ['pop_up_elec','pop_up_bois','pop_up_usinage']
 Data = []
 Lelec = []
 Lbois = []
@@ -99,15 +90,13 @@ class EmpruntTypeOutils(QWidget):
         global Lbois
         global Lusinage
         global Lfinal
+        Lfinal = []
         for i in range(len(Lelec)):
-            if Lelec[i] not in Lfinal :
-                Lfinal.append(Lelec[i])
+            Lfinal.append(Lelec[i])
         for i in range(len(Lbois)):
-            if Lbois[i] not in Lfinal :
-                Lfinal.append(Lbois[i])
+            Lfinal.append(Lbois[i])
         for i in range(len(Lusinage)):
-            if Lusinage[i] not in Lfinal :
-                Lfinal.append(Lusinage[i])
+            Lfinal.append(Lusinage[i])
         print("Lfinal",Lfinal)
         pop_up = PopUpListeEmpruntsWidget()
         widget.insertWidget(5,pop_up)
@@ -301,20 +290,35 @@ class PopUpListeEmpruntsWidget(QWidget, QSqlDatabase):
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
 
 #------------------------------------REMPLIR LES TABLEAUX------------------------------------------------------------
-        for item in Lfinal:
+        for item in range(0,len(Lfinal),2):
             print("row",row)
             print("item", item)
-            cell = QTableWidgetItem(str(item))
+            cell = QTableWidgetItem(str(Lfinal[item]))
             self.table_Recap.setItem(row, col, cell)
+            cell = QTableWidgetItem(str(Lfinal[item+1]))
+            self.table_Recap.setItem(row, col+1, cell)
             row+=1
 
+
     def reponseConfirmer(self):
-        widget.setCurrentIndex(0)
+        global Lfinal
+
+        print("longueur liste",len(Lfinal))
+        for i in range(1,len(Lfinal)+1,2):
+            connection = mysql.connector.connect(user='u556968436_LaTeamDeLoick', password='LoickRaison2022',
+                                                 host='145.14.151.101',
+                                                 database='u556968436_fablab')
+            print("quantite :",Lfinal[i],"nom outil :",Lfinal[i-1])
+            # req = "UPDATE Outils SET quantiteEmprunte_Outils ="+Lfinal[i]+" WHERE nomOutils_Outils ='"+Lfinal[i-1]+"'"
+            req = "UPDATE Outils SET quantiteEmprunte_Outils = 1 WHERE nomOutils_Outils = 'LOUPE BLANCHE RETRO ECLAIRE'"
+            print("requete fonctionnelle : ",req)
+            cursor = connection.cursor()
+            cursor.execute(req)
+            connection.close()
+        widget.setCurrentWidget(page_accueil)
 
     def reponseCroix(self):
         widget.setCurrentIndex(1)
-
-
 
 
 if __name__ == "__main__":
