@@ -18,6 +18,42 @@ Lbois = []
 Lusinage = []
 Lfinal=[]
 
+# class EspaceConnection(QWidget):
+#     def __init__(self):
+#         super(EspaceConnection,self).__init__()
+#         loadUi('espace_connection.ui', self)
+#         self.bouton_connection.clicked.connect(self.seConnecter)
+#         self.line_mdp.setEchoMode(2)
+#
+#     def seConnecter(self):
+#         mail = self.line_mail.text()
+#         mdp = self.line_mdp.text()
+#         connection = mysql.connector.connect(user='u556968436_LaTeamDeLoick', password='LoickRaison2022',
+#                                              host='145.14.151.101',
+#                                              database='u556968436_fablab')
+#         req = "select * from Personnes"
+#         cursor = connection.cursor()
+#         cursor.execute(req)
+#         Data = cursor.fetchall()
+#         connection.close
+#
+#         if mail and mdp in Data :
+#             connection = mysql.connector.connect(user='u556968436_LaTeamDeLoick', password='LoickRaison2022',
+#                                                  host='145.14.151.101',
+#                                                  database='u556968436_fablab')
+#             req = "select numPers_Personnes from Personnes where mailPers_Personnes ="+"'"+mail+"'"
+#             cursor.execute(req)
+#             id_user = cursor.fetch()
+#             connection.close
+#
+#         connection = mysql.connector.connect(user='u556968436_LaTeamDeLoick', password='LoickRaison2022',
+#                                              host='145.14.151.101',
+#                                              database='u556968436_fablab')
+#         req = "select numOutils_Outils from Emprunter where numPers_Personnes ="+"'"+id_user+"'"
+#         cursor.execute(req)
+#         id_product = cursor.fetch()
+#         connection.close
+
 class PageAccueil(QWidget):
     def __init__(self):
         super(PageAccueil,self).__init__()
@@ -29,10 +65,10 @@ class PageAccueil(QWidget):
         print("Index rendreoutils : ",widget.indexOf(page_choix_type_outils))
         page_rendre_outils = RendreOutils()
         widget.insertWidget(2,page_rendre_outils)
-        widget.setCurrentIndex(2)
+        widget.setCurrentWidget(page_rendre_outils)
 
     def goToEmprunterOutils(self):
-        widget.setCurrentIndex(1)
+        widget.setCurrentWidget(page_choix_type_outils)
         print("Index emprunteroutils : ",widget.indexOf(page_choix_type_outils))
         self.creationPages()
 
@@ -47,12 +83,8 @@ class PageAccueil(QWidget):
             requete_Outils = Requete_Outils[i]
             print(requete_Outils)
             page_choix_outils[i] = EmpruntAjout()
-            widget.insertWidget(i+2,page_choix_outils[i])
+            widget.addWidget(page_choix_outils[i])
             print("Index of : ", requete_Outils,' is ', widget.indexOf(page_choix_outils[i]))
-            # pop_up[i] = PopUpListeEmpruntsWidget()
-            # widget.insertWidget(2*i+3,pop_up[i])
-            # print("Index of : pop up ", requete_Outils,' is ', widget.indexOf(pop_up[i]))
-
 
 class EmpruntTypeOutils(QWidget):
     def __init__(self):
@@ -68,20 +100,20 @@ class EmpruntTypeOutils(QWidget):
         self.rendreOutils_4.clicked.connect(self.validate)
 
     def accueil(self):
-        widget.setCurrentIndex(0)
+        widget.setCurrentWidget(page_accueil)
 
     def elec(self):
-        widget.setCurrentIndex(2)
+        widget.setCurrentWidget(page_choix_outils[0])
         global requete_Outils
         requete_Outils = 'ELEC'
 
     def bois(self):
-        widget.setCurrentIndex(3)
+        widget.setCurrentWidget(page_choix_outils[1])
         global requete_Outils
         requete_Outils = 'BOIS'
 
     def usinage(self):
-        widget.setCurrentIndex(4)
+        widget.setCurrentWidget(page_choix_outils[2])
         global requete_Outils
         requete_Outils = 'USINAGE'
 
@@ -201,10 +233,10 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         print('Lusinage',Lusinage)
 
     def accueil(self):
-       widget.setCurrentIndex(0)
+       widget.setCurrentWidget(page_accueil)
 
     def returntypeoutils(self):
-        widget.setCurrentIndex(1)
+        widget.setCurrentWidget(page_choix_type_outils)
 
     def date(self):
         value = self.dateemprunt.selectedDate()
@@ -212,7 +244,7 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         print(date_in_string)
 
     def goToChoixTypeOutils(self):
-        widget.setCurrentIndex(1)
+        widget.setCurrentWidget(page_choix_type_outils)
 
 class RendreOutils(QWidget, QSqlDatabase):
     def __init__(self):
@@ -272,7 +304,7 @@ class RendreOutils(QWidget, QSqlDatabase):
             header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
 
     def accueil(self):
-        widget.setCurrentIndex(0)
+        widget.setCurrentWidget(page_accueil)
 
     def rendre(self):
         Lrendre=[]
@@ -344,11 +376,10 @@ class PopUpListeEmpruntsWidget(QWidget, QSqlDatabase):
             cursor.execute(req,tuple)
             connection.commit()
             connection.close()
-        print("lol")
         widget.setCurrentWidget(page_accueil)
 
     def reponseCroix(self):
-        widget.setCurrentIndex(1)
+        widget.setCurrentWidget(page_choix_type_outils)
 
 
 if __name__ == "__main__":
@@ -356,10 +387,12 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     widget = QtWidgets.QStackedWidget()
 
+    # espace_connection = EspaceConnection()
     page_accueil = PageAccueil()
     page_choix_type_outils = EmpruntTypeOutils()
     # page_choix_outils = EmpruntAjout()
 
+    # widget.addWidget(espace_connection)
     widget.addWidget(page_accueil)
     widget.addWidget(page_choix_type_outils)
     # widget.addWidget(page_choix_outils)
