@@ -4,7 +4,7 @@ import sys
 from PyQt5 import QtGui, QtCore
 from PyQt5 import QtWidgets
 from PyQt5.uic import loadUi
-from PyQt5.QtWidgets import QApplication, QWidget, QTableWidgetItem, QComboBox
+from PyQt5.QtWidgets import QApplication, QWidget, QTableWidgetItem, QComboBox, QMessageBox
 from PyQt5.QtSql import QSqlDatabase
 import mysql.connector
 
@@ -18,41 +18,48 @@ Lbois = []
 Lusinage = []
 Lfinal=[]
 
-# class EspaceConnection(QWidget):
-#     def __init__(self):
-#         super(EspaceConnection,self).__init__()
-#         loadUi('espace_connection.ui', self)
-#         self.bouton_connection.clicked.connect(self.seConnecter)
-#         self.line_mdp.setEchoMode(2)
-#
-#     def seConnecter(self):
-#         mail = self.line_mail.text()
-#         mdp = self.line_mdp.text()
-#         connection = mysql.connector.connect(user='u556968436_LaTeamDeLoick', password='LoickRaison2022',
-#                                              host='145.14.151.101',
-#                                              database='u556968436_fablab')
-#         req = "select * from Personnes"
-#         cursor = connection.cursor()
-#         cursor.execute(req)
-#         Data = cursor.fetchall()
-#         connection.close
-#
-#         if mail and mdp in Data :
-#             connection = mysql.connector.connect(user='u556968436_LaTeamDeLoick', password='LoickRaison2022',
-#                                                  host='145.14.151.101',
-#                                                  database='u556968436_fablab')
-#             req = "select numPers_Personnes from Personnes where mailPers_Personnes ="+"'"+mail+"'"
-#             cursor.execute(req)
-#             id_user = cursor.fetch()
-#             connection.close
-#
-#         connection = mysql.connector.connect(user='u556968436_LaTeamDeLoick', password='LoickRaison2022',
-#                                              host='145.14.151.101',
-#                                              database='u556968436_fablab')
-#         req = "select numOutils_Outils from Emprunter where numPers_Personnes ="+"'"+id_user+"'"
-#         cursor.execute(req)
-#         id_product = cursor.fetch()
-#         connection.close
+class Connection(QWidget):
+    def __init__(self):
+        super(Connection,self).__init__()
+        loadUi('espace_connection.ui', self)
+        self.bouton_connection.clicked.connect(self.seConnecter)
+        self.linkbouton_inscription.clicked.connect(self.goToInscription)
+        self.line_mdp.setEchoMode(2)
+
+    def seConnecter(self):
+        mail = self.line_mail.text()
+        mdp = self.line_mdp.text()
+        if mail != '' and mdp != '':
+            widget.setCurrentWidget(page_accueil)
+        else :
+            error = QMessageBox()
+            error.setText("Veuillez renseigner les champs")
+            error.exec()
+
+    def goToInscription(self):
+        widget.setCurrentWidget(espace_inscription)
+
+
+class Inscription(QWidget):
+    def __init__(self):
+        super(Inscription,self).__init__()
+        loadUi('espace_inscription.ui', self)
+        self.bouton_inscription.clicked.connect(self.InscrireUser)
+        self.linkbouton_connection.clicked.connect(self.goToConnexion)
+        self.line_mdp.setEchoMode(2)
+
+    def InscrireUser(self):
+        mail = self.line_mail.text()
+        mdp = self.line_mdp.text()
+        if mail != '' and mdp != '':
+            widget.setCurrentWidget(espace_connection)
+        else :
+            error = QMessageBox()
+            error.setText("Veuillez renseigner les champs")
+            error.exec()
+
+    def goToConnexion(self):
+        widget.setCurrentWidget(espace_connection)
 
 class PageAccueil(QWidget):
     def __init__(self):
@@ -175,7 +182,7 @@ class EmpruntAjout(QWidget, QSqlDatabase):
 
             cell = QTableWidgetItem(str(item[1]))
             self.table_Emprunt.setItem(row, col+1, cell)
-#-----------3EME COLONNE : FAIRE UNE LISTE DEROULANTE POUR CHOISIR LA QUANTITE DE CHAQUUE OUTIL A EMPRUNTER---------------
+#-----------3EME COLONNE : FAIRE UNE LISTE DEROULANTE POUR CHOISIR LA QUANTITE DE CHAQUE OUTIL A EMPRUNTER---------------
             L = []
             for i in range(item[3] - item[5] + 1):
                 L.append(str(i))
@@ -387,15 +394,15 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     widget = QtWidgets.QStackedWidget()
 
-    # espace_connection = EspaceConnection()
+    espace_connection = Connection()
+    espace_inscription = Inscription()
     page_accueil = PageAccueil()
     page_choix_type_outils = EmpruntTypeOutils()
-    # page_choix_outils = EmpruntAjout()
 
-    # widget.addWidget(espace_connection)
+    widget.addWidget(espace_connection)
+    widget.addWidget(espace_inscription)
     widget.addWidget(page_accueil)
     widget.addWidget(page_choix_type_outils)
-    # widget.addWidget(page_choix_outils)
 
 
     widget.setFixedHeight(700)
