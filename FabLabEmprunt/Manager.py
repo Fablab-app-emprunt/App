@@ -31,10 +31,13 @@ class Connection(QWidget):
         mdp = self.line_mdp.text()
         if mail != '' and mdp != '':
             widget.setCurrentWidget(page_accueil)
+            self.line_mail.setText('')
+            self.line_mdp.setText('')
         else :
             error = QMessageBox()
             error.setText("Veuillez renseigner les champs")
             error.exec()
+
 
     def goToInscription(self):
         widget.setCurrentWidget(espace_inscription)
@@ -52,7 +55,11 @@ class Inscription(QWidget):
         mail = self.line_mail.text()
         mdp = self.line_mdp.text()
         if mail != '' and mdp != '':
-            widget.setCurrentWidget(espace_connection)
+            sucess = QMessageBox()
+            sucess.setText("Inscription réussie !")
+            sucess.exec()
+            self.line_mail.setText('')
+            self.line_mdp.setText('')
         else :
             error = QMessageBox()
             error.setText("Veuillez renseigner les champs")
@@ -65,6 +72,10 @@ class PageAccueil(QWidget):
     def __init__(self):
         super(PageAccueil,self).__init__()
         loadUi('pageAccueil.ui',self)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap('Capture d’écran 2022-04-14 153417.png'))
+        self.boutonaccueil.setIcon(icon)
+        self.boutonaccueil.clicked.connect(self.accueil)
         self.rendreoutils.clicked.connect(self.goToRendreOutils)
         self.emprunteroutils.clicked.connect(self.goToEmprunterOutils)
 
@@ -93,6 +104,8 @@ class PageAccueil(QWidget):
             widget.addWidget(page_choix_outils[i])
             print("Index of : ", requete_Outils,' is ', widget.indexOf(page_choix_outils[i]))
 
+    def accueil(self):
+        widget.setCurrentWidget(espace_connection)
 class EmpruntTypeOutils(QWidget):
     def __init__(self):
         super(EmpruntTypeOutils, self).__init__()
@@ -107,7 +120,7 @@ class EmpruntTypeOutils(QWidget):
         self.rendreOutils_4.clicked.connect(self.validate)
 
     def accueil(self):
-        widget.setCurrentWidget(page_accueil)
+        widget.setCurrentWidget(espace_connection)
 
     def elec(self):
         widget.setCurrentWidget(page_choix_outils[0])
@@ -240,7 +253,7 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         print('Lusinage',Lusinage)
 
     def accueil(self):
-       widget.setCurrentWidget(page_accueil)
+       widget.setCurrentWidget(espace_connection)
 
     def returntypeoutils(self):
         widget.setCurrentWidget(page_choix_type_outils)
@@ -311,7 +324,7 @@ class RendreOutils(QWidget, QSqlDatabase):
             header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
 
     def accueil(self):
-        widget.setCurrentWidget(page_accueil)
+        widget.setCurrentWidget(espace_connection)
 
     def rendre(self):
         Lrendre=[]
