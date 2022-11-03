@@ -8,152 +8,136 @@ from PyQt5.QtWidgets import QApplication, QWidget, QTableWidgetItem, QComboBox, 
 from PyQt5.QtSql import QSqlDatabase
 import mysql.connector
 
+from FabLabEmprunt.main import page_choix_outils
 
-requete_Outils = ''
-Requete_Outils = ['ELEC','BOIS','USINAGE']
-page_choix_outils = ['page_choix_outils_elec','page_choix_outils_bois','page_choix_outils_usinage']
 Data = []
-Lelec = []
-Lbois = []
-Lusinage = []
-Lfinal=[]
+L = []
 
-class Connection(QWidget):
-    def __init__(self):
-        super(Connection,self).__init__()
-        loadUi('espace_connection.ui', self)
-        self.bouton_connection.clicked.connect(self.seConnecter)
-        self.linkbouton_inscription.clicked.connect(self.goToInscription)
-        self.line_mdp.setEchoMode(2)
+# class Connection(QWidget):
+#     def __init__(self):
+#         super(Connection,self).__init__()
+#         loadUi('espace_connection.ui', self)
+#         self.bouton_connection.clicked.connect(self.seConnecter)
+#         self.linkbouton_inscription.clicked.connect(self.goToInscription)
+#         self.line_mdp.setEchoMode(2)
 
-    def seConnecter(self):
-        mail = self.line_mail.text()
-        mdp = self.line_mdp.text()
-        if mail != '' and mdp != '':
-            widget.setCurrentWidget(page_accueil)
-            self.line_mail.setText('')
-            self.line_mdp.setText('')
-        else :
-            error = QMessageBox()
-            error.setText("Veuillez renseigner les champs")
-            error.exec()
+    # def seConnecter(self):
+    #     mail = self.line_mail.text()
+    #     mdp = self.line_mdp.text()
+    #     if mail != '' and mdp != '':
+    #         widget.setCurrentWidget(page_accueil)
+    #         self.line_mail.setText('')
+    #         self.line_mdp.setText('')
+    #     else :
+    #         error = QMessageBox()
+    #         error.setText("Veuillez renseigner les champs")
+    #         error.exec()
+    #
+    # def goToInscription(self):
+    #     widget.setCurrentWidget(espace_inscription)
 
-
-    def goToInscription(self):
-        widget.setCurrentWidget(espace_inscription)
-
-
-class Inscription(QWidget):
-    def __init__(self):
-        super(Inscription,self).__init__()
-        loadUi('espace_inscription.ui', self)
-        self.bouton_inscription.clicked.connect(self.InscrireUser)
-        self.linkbouton_connection.clicked.connect(self.goToConnexion)
-        self.line_mdp.setEchoMode(2)
-
-    def InscrireUser(self):
-        mail = self.line_mail.text()
-        mdp = self.line_mdp.text()
-        if mail != '' and mdp != '':
-            sucess = QMessageBox()
-            sucess.setText("Inscription réussie !")
-            sucess.exec()
-            self.line_mail.setText('')
-            self.line_mdp.setText('')
-        else :
-            error = QMessageBox()
-            error.setText("Veuillez renseigner les champs")
-            error.exec()
-
-    def goToConnexion(self):
-        widget.setCurrentWidget(espace_connection)
+# class Inscription(QWidget):
+#     def __init__(self):
+#         super(Inscription,self).__init__()
+#         loadUi('espace_inscription.ui', self)
+#         self.bouton_inscription.clicked.connect(self.InscrireUser)
+#         self.linkbouton_connection.clicked.connect(self.goToConnexion)
+#         self.line_mdp.setEchoMode(2)
+#
+#     def InscrireUser(self):
+#         mail = self.line_mail.text()
+#         mdp = self.line_mdp.text()
+#         if mail != '' and mdp != '':
+#             sucess = QMessageBox()
+#             sucess.setText("Inscription réussie !")
+#             sucess.exec()
+#             self.line_mail.setText('')
+#             self.line_mdp.setText('')
+#         else :
+#             error = QMessageBox()
+#             error.setText("Veuillez renseigner les champs")
+#             error.exec()
+#
+#     def goToConnexion(self):
+#         widget.setCurrentWidget(espace_connection)
 
 class PageAccueil(QWidget):
     def __init__(self):
         super(PageAccueil,self).__init__()
         loadUi('pageAccueil.ui',self)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap('Capture d’écran 2022-04-14 153417.png'))
-        self.boutonaccueil.setIcon(icon)
+        # icon = QtGui.QIcon()
+        # icon.addPixmap(QtGui.QPixmap('Capture d’écran 2022-04-14 153417.png'))
+        # self.boutonaccueil.setIcon(icon)
         self.boutonaccueil.clicked.connect(self.accueil)
         self.rendreoutils.clicked.connect(self.goToRendreOutils)
         self.emprunteroutils.clicked.connect(self.goToEmprunterOutils)
 
     def goToRendreOutils(self):
-        print("Index rendreoutils : ",widget.indexOf(page_choix_type_outils))
+        print("Index rendreoutils : ",widget.indexOf(page_choix_outils))
         page_rendre_outils = RendreOutils()
         widget.insertWidget(2,page_rendre_outils)
         widget.setCurrentWidget(page_rendre_outils)
 
     def goToEmprunterOutils(self):
-        widget.setCurrentWidget(page_choix_type_outils)
-        print("Index emprunteroutils : ",widget.indexOf(page_choix_type_outils))
+        widget.setCurrentWidget(page_choix_outils)
+        print("Index emprunteroutils : ",widget.indexOf(page_choix_outils))
         self.creationPages()
 
     def creationPages(self):
-#----------------CREATION PAGES ELEC BOIS USINAGE ET LES POPUPS--------------------------------
-        global requete_Outils
-        global Requete_Outils
-        global page_choix_outils
         global pop_up
-        print(requete_Outils)
-        for i in range(3):
-            requete_Outils = Requete_Outils[i]
-            print(requete_Outils)
-            page_choix_outils[i] = EmpruntAjout()
-            widget.addWidget(page_choix_outils[i])
-            print("Index of : ", requete_Outils,' is ', widget.indexOf(page_choix_outils[i]))
+        widget.addWidget(page_choix_outils)
 
     def accueil(self):
-        widget.setCurrentWidget(espace_connection)
-class EmpruntTypeOutils(QWidget):
-    def __init__(self):
-        super(EmpruntTypeOutils, self).__init__()
-        loadUi('empruntTypeOutils.ui', self)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap('Capture d’écran 2022-04-14 153417.png'))
-        self.boutonaccueil.setIcon(icon)
-        self.bouton_electronique.clicked.connect(self.elec)
-        self.bouton_bois.clicked.connect(self.bois)
-        self.bouton_usinage.clicked.connect(self.usinage)
-        self.boutonaccueil.clicked.connect(self.accueil)
-        self.rendreOutils_4.clicked.connect(self.validate)
+        widget.setCurrentWidget(page_accueil)
 
-    def accueil(self):
-        widget.setCurrentWidget(espace_connection)
-
-    def elec(self):
-        widget.setCurrentWidget(page_choix_outils[0])
-        global requete_Outils
-        requete_Outils = 'ELEC'
-
-    def bois(self):
-        widget.setCurrentWidget(page_choix_outils[1])
-        global requete_Outils
-        requete_Outils = 'BOIS'
-
-    def usinage(self):
-        widget.setCurrentWidget(page_choix_outils[2])
-        global requete_Outils
-        requete_Outils = 'USINAGE'
-
-    def validate(self):
-        global Lelec
-        global Lbois
-        global Lusinage
-        global Lfinal
-        Lfinal = []
-        for i in range(len(Lelec)):
-            Lfinal.append(Lelec[i])
-        for i in range(len(Lbois)):
-            Lfinal.append(Lbois[i])
-        for i in range(len(Lusinage)):
-            Lfinal.append(Lusinage[i])
-        print("Lfinal",Lfinal)
-        pop_up = PopUpListeEmpruntsWidget()
-        widget.insertWidget(5,pop_up)
-        print("Index of : pop up is ", widget.indexOf(pop_up))
-        widget.setCurrentIndex(5)
+# class EmpruntTypeOutils(QWidget):
+#     def __init__(self):
+#         super(EmpruntTypeOutils, self).__init__()
+#         loadUi('empruntAjout.ui', self)
+#         icon = QtGui.QIcon()
+#         icon.addPixmap(QtGui.QPixmap('Capture d’écran 2022-04-14 153417.png'))
+#         self.boutonaccueil.setIcon(icon)
+#         self.bouton_electronique.clicked.connect(self.elec)
+#         self.bouton_bois.clicked.connect(self.bois)
+#         self.bouton_usinage.clicked.connect(self.usinage)
+#         self.boutonaccueil.clicked.connect(self.accueil)
+#         self.rendreOutils_4.clicked.connect(self.validate)
+#
+#     def accueil(self):
+#         widget.setCurrentWidget(espace_connection)
+#
+#     def elec(self):
+#         widget.setCurrentWidget(page_choix_outils[0])
+#         global requete_Outils
+#         requete_Outils = 'ELEC'
+#
+#     def bois(self):
+#         widget.setCurrentWidget(page_choix_outils[1])
+#         global requete_Outils
+#         requete_Outils = 'BOIS'
+#
+#     def usinage(self):
+#         widget.setCurrentWidget(page_choix_outils[2])
+#         global requete_Outils
+#         requete_Outils = 'USINAGE'
+#
+#     def validate(self):
+#         global Lelec
+#         global Lbois
+#         global Lusinage
+#         global Lfinal
+#         Lfinal = []
+#         for i in range(len(Lelec)):
+#             Lfinal.append(Lelec[i])
+#         for i in range(len(Lbois)):
+#             Lfinal.append(Lbois[i])
+#         for i in range(len(Lusinage)):
+#             Lfinal.append(Lusinage[i])
+#         print("Lfinal",Lfinal)
+#         pop_up = PopUpListeEmpruntsWidget()
+#         widget.insertWidget(5,pop_up)
+#         print("Index of : pop up is ", widget.indexOf(pop_up))
+#         widget.setCurrentIndex(5)
 
 class EmpruntAjout(QWidget, QSqlDatabase):
     def __init__(self):
@@ -169,7 +153,6 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         self.boutonvalider.clicked.connect(self.goToChoixTypeOutils)
         self.return_bouton.clicked.connect(self.returntypeoutils)
 
-        global requete_Outils
         global Data
         self.table_Emprunt.setColumnCount(4)
         self.table_Emprunt.rowCount()
@@ -182,7 +165,7 @@ class EmpruntAjout(QWidget, QSqlDatabase):
                                              database='u556968436_fablab')
 
 
-        count_tools = "select * from Outils where departOutils_Outils = '"+requete_Outils+"' and `quantiteEmprunte_Outils`!= quantiteOutils_Outils"
+        count_tools = "select * from Outils where `quantiteEmprunte_Outils`!= quantiteOutils_Outils"
 
         cursor = connection.cursor()
         cursor.execute(count_tools)
@@ -220,17 +203,7 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         connection.close()
 
     def recupdata(self):
-
-        global requete_Outils
-        global Lelec
-        global Lbois
-        global Lusinage
-        if requete_Outils == 'ELEC':
-            Lelec = []
-        elif requete_Outils == 'BOIS':
-            Lbois = []
-        elif requete_Outils == 'USINAGE':
-            Lusinage = []
+        global Lfinal
         for row in range(self.table_Emprunt.rowCount()-1):
             L=[]
             if self.table_Emprunt.item(row,3).checkState() == QtCore.Qt.CheckState.Checked:
@@ -239,24 +212,26 @@ class EmpruntAjout(QWidget, QSqlDatabase):
                     # L.append(self.table_Emprunt.item(row,2).currentText())
                     print("quantite",int(self.table_Emprunt.cellWidget(row,2).currentText()))
                     print(L)
-                if requete_Outils == 'ELEC':
-                    Lelec.append(L[0])
-                    Lelec.append(int(self.table_Emprunt.cellWidget(row,2).currentText()))
-                elif requete_Outils == 'BOIS':
-                    Lbois.append(L[0])
-                    Lbois.append(int(self.table_Emprunt.cellWidget(row,2).currentText()))
-                elif requete_Outils == 'USINAGE':
-                    Lusinage.append(L[0])
-                    Lusinage.append(int(self.table_Emprunt.cellWidget(row,2).currentText()))
-        print('Lelec',Lelec)
-        print('Lbois',Lbois)
-        print('Lusinage',Lusinage)
+                Lfinal.append(L[0])
+                Lfinal.append(int(self.table_Emprunt.cellWidget(row,2).currentText()))
+        #         if requete_Outils == 'ELEC':
+        #             Lelec.append(L[0])
+        #             Lelec.append(int(self.table_Emprunt.cellWidget(row,2).currentText()))
+        #         elif requete_Outils == 'BOIS':
+        #             Lbois.append(L[0])
+        #             Lbois.append(int(self.table_Emprunt.cellWidget(row,2).currentText()))
+        #         elif requete_Outils == 'USINAGE':
+        #             Lusinage.append(L[0])
+        #             Lusinage.append(int(self.table_Emprunt.cellWidget(row,2).currentText()))
+        # print('Lelec',Lelec)
+        # print('Lbois',Lbois)
+        # print('Lusinage',Lusinage)
 
     def accueil(self):
-       widget.setCurrentWidget(espace_connection)
+       widget.setCurrentWidget(page_accueil)
 
     def returntypeoutils(self):
-        widget.setCurrentWidget(page_choix_type_outils)
+        widget.setCurrentWidget(page_choix_outils)
 
     def date(self):
         value = self.dateemprunt.selectedDate()
@@ -264,7 +239,7 @@ class EmpruntAjout(QWidget, QSqlDatabase):
         print(date_in_string)
 
     def goToChoixTypeOutils(self):
-        widget.setCurrentWidget(page_choix_type_outils)
+        widget.setCurrentWidget(page_choix_outils)
 
 class RendreOutils(QWidget, QSqlDatabase):
     def __init__(self):
@@ -324,7 +299,7 @@ class RendreOutils(QWidget, QSqlDatabase):
             header.setSectionResizeMode(3, QtWidgets.QHeaderView.ResizeToContents)
 
     def accueil(self):
-        widget.setCurrentWidget(espace_connection)
+        widget.setCurrentWidget(page_accueil)
 
     def rendre(self):
         Lrendre=[]
@@ -399,7 +374,7 @@ class PopUpListeEmpruntsWidget(QWidget, QSqlDatabase):
         widget.setCurrentWidget(page_accueil)
 
     def reponseCroix(self):
-        widget.setCurrentWidget(page_choix_type_outils)
+        widget.setCurrentWidget(page_choix_outils)
 
 
 if __name__ == "__main__":
@@ -407,15 +382,17 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     widget = QtWidgets.QStackedWidget()
 
-    espace_connection = Connection()
-    espace_inscription = Inscription()
+    # espace_connection = Connection()
+    # espace_inscription = Inscription()
     page_accueil = PageAccueil()
-    page_choix_type_outils = EmpruntTypeOutils()
+    page_choix_outils = EmpruntAjout()
+    # page_choix_type_outils = EmpruntTypeOutils()
 
-    widget.addWidget(espace_connection)
-    widget.addWidget(espace_inscription)
+    # widget.addWidget(espace_connection)
+    # widget.addWidget(espace_inscription)
     widget.addWidget(page_accueil)
-    widget.addWidget(page_choix_type_outils)
+
+    # widget.addWidget(page_choix_type_outils)
 
 
     widget.setFixedHeight(700)
@@ -427,3 +404,4 @@ if __name__ == "__main__":
         sys.exit(app.exec_())
     except :
         print("Exiting")
+
